@@ -1,0 +1,16 @@
+---
+# defaults file for CIS-Ubuntu-Linux-16.04-LTS-Benchmark
+
+# Server Profile? Otherwise Workstation
+server: true
+
+# Level-1-and-2 Profile? Otherwise Level-1 only.
+level-1-and-2: true
+
+# Sections
+initial-setup: false
+services: false
+network-configuration: false
+logging-and-auditing: false
+access-authentication-and-authorizatoin: false
+system-maintenance: false

@@ -1,0 +1,11 @@
+---
+
+  - name: Check if Ansible version is 2.5+
+    debug:
+      msg: "Check if Ansible version is 2.5+"
+    failed_when: not ansible_version.full | version_compare('2.5', '>=')
+
+  - name: Check if OS is Ubuntu 16.04 LTS (Xenial Xerus)
+    debug:
+      msg: "Check if OS is Ubuntu 16.04 LTS (Xenial Xerus)"
+    failed_when: ansible_distribution != "Ubuntu" and ansible_distribution_version !="16.04"
