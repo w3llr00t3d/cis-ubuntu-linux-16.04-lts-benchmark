@@ -7,7 +7,7 @@
   changed_when: False
   ignore_errors: True
 
-  - name: restart chrony
+- name: restart chrony
   service:
     name: chrony 
     state: restarted

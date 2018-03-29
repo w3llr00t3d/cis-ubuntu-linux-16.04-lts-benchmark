@@ -5,16 +5,16 @@
 server: true
 
 # Level-1-and-2 Profile? Otherwise Level-1 only.
-level-1-and-2: true
+level_1_and_2: true
 
 # Time Synchronization Package
-time-sync-package: ntp
-time-sync-server: ntp.ubuntu.com
+time_sync_package: ntp
+time_sync_server: ntp.ubuntu.com
 
 # Sections
-initial-setup: true
+initial_setup: true
 services: true
-network-configuration: true
-logging-and-auditing: true
-access-authentication-and-authorizatoin: true
-system-maintenance: true
+network_configuration: true
+logging_and_auditing: true
+access_authentication_and_authorizatoin: true
+system_maintenance: true
