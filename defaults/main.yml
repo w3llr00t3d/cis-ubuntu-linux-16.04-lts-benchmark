@@ -7,6 +7,10 @@ server: true
 # Level-1-and-2 Profile? Otherwise Level-1 only.
 level-1-and-2: true
 
+# Time Synchronization Package
+time-sync-package: ntp
+time-sync-server: ntp.ubuntu.com
+
 # Sections
 initial-setup: true
 services: true
