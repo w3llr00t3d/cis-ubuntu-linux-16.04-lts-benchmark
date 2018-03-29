@@ -1,7 +1,7 @@
 ---
 # tasks file for CIS-Ubuntu-Linux-16.04-LTS-Benchmark
 
-- include: preliminary-checks.yml
+- include: preliminary_checks.yml
 
 - include: initial_setup.yml
   when: initial-setup

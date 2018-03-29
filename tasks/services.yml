@@ -71,7 +71,7 @@
     - { name: '/etc/ntp.conf' , expression: '^restrict -4' , value: 'restrict -4 default kod nomodify notrap nopeer noquery' }
     - { name: '/etc/ntp.conf' , expression: '^restrict -6' , value: 'restrict -6 default kod nomodify notrap nopeer noquery' }
     - { name: '/etc/init.d/ntp', expression: '^RUNASUSER' , value: 'RUNASUSER=ntp' }
-  when: time-sync-package  == "ntp"
+  when: time_sync_package  == "ntp"
   notify: restart ntp
 
 - name: 2.2.1.3 Ensure chrony is configured (Scored)
@@ -82,7 +82,7 @@
   with_items:
     - { name: '/etc/chrony/chrony.conf', expression: '^server', value: 'server {{ time_sync_server }}' }
     - { name: '/etc/chrony/chrony.conf', expression: '^pool', value: '' }
-  when: time-sync-package  == "chrony"
+  when: time_sync_package  == "chrony"
   notify: restart chrony
 
 - name: 2.2.2 Ensure X Window System is not installed (Scored)
