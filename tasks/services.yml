@@ -1,30 +1,61 @@
 ---
 
 - stat:
-    path: /etc/inetd.conf
-    register: inetd_conf
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+  path: /etc/inetd.conf
+  register: inetd_conf
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
 - stat:
-    path: /etc/xinetd.conf
-    register: xinetd_conf
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+  path: /etc/xinetd.conf
+  register: xinetd_conf
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
 - stat:
-    path: /etc/inetd.d/chargen
-    register: inetd_chargen
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+  path: /etc/inetd.d/chargen
+  register: inetd_chargen
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
 - stat:
-    path: /etc/xinetd.d/chargen
-    register: xinetd_chargen
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+  path: /etc/xinetd.d/chargen
+  register: xinetd_chargen
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
+- name: 2.1.1 Ensure chargen services are not enabled (Scored)
+  lineinfile:
+    dest: /etc/inetd.conf
+    # Missing: Comment out or remove any lines starting with chargen from /etc/inetd.conf and /etc/inetd.d/*. 
+  when: inetd_conf.stat.exists
+
+- name: 2.1.1 Ensure chargen services are not enabled (Scored)
+  lineinfile:
+    dest: /etc/inetd.d/chargen
+      # Missing: Comment out or remove any lines starting with chargen from /etc/inetd.conf and /etc/inetd.d/*. 
+  when: inetd_chargen.stat.exists
+
+- name: 2.1.1 Ensure chargen services are not enabled (Scored)
+  lineinfile:
+    dest: /etc/xinetd.conf
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_conf.stat.exists
+
+- name: 2.1.1 Ensure chargen services are not enabled (Scored)
+  lineinfile:
+    dest: /etc/xinetd.d/chargen
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_chargen.stat.exists
+
+- name: 2.2.10 Ensure HTTP server is not enabled (Scored) 
+  service:
+    name: apache2
+    state: stopped
+    enabled: no
