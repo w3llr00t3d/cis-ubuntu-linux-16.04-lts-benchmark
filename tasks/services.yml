@@ -1,0 +1,30 @@
+---
+
+- stat:
+    path: /etc/inetd.conf
+    register: inetd_conf
+    failed_when: False
+    ignore_errors: True
+    changed_when: False
+
+- stat:
+    path: /etc/xinetd.conf
+    register: xinetd_conf
+    failed_when: False
+    ignore_errors: True
+    changed_when: False
+
+- stat:
+    path: /etc/inetd.d/chargen
+    register: inetd_chargen
+    failed_when: False
+    ignore_errors: True
+    changed_when: False
+
+- stat:
+    path: /etc/xinetd.d/chargen
+    register: xinetd_chargen
+    failed_when: False
+    ignore_errors: True
+    changed_when: False
+

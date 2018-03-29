@@ -8,9 +8,9 @@ server: true
 level-1-and-2: true
 
 # Sections
-initial-setup: false
-services: false
+initial-setup: true
+services: true
 network-configuration: true
-logging-and-auditing: false
-access-authentication-and-authorizatoin: false
-system-maintenance: false
+logging-and-auditing: true
+access-authentication-and-authorizatoin: true
+system-maintenance: true
