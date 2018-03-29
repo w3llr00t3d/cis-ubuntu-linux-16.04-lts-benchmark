@@ -10,7 +10,7 @@ level-1-and-2: true
 # Sections
 initial-setup: false
 services: false
-network-configuration: false
+network-configuration: true
 logging-and-auditing: false
 access-authentication-and-authorizatoin: false
 system-maintenance: false
