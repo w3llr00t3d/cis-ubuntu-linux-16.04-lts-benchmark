@@ -214,26 +214,22 @@
   when: apache2.rc == 0
 
 - command: dpkg-query -s dovecot
-    register: dovecot
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+  register: dovecot
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
   - command: dpkg-query -s exim
-    register: exim
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+  register: exim
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
   - command: dpkg-query -s cyrus-imap
-    register: cyrus_imap
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
-    tags:
-      - section2
-      - section2.2
-      - section2.2.11
+  register: cyrus_imap
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
   - name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
     service:
