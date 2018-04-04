@@ -89,7 +89,6 @@
     name: net.ipv4.tcp_syncookies
     value: 1
     state: present
-  when: enable_tcp_syncookies == True
 
 - name: 3.3.1 Ensure IPv6 router advertisements are not accepted (Not Scored)
   sysctl:
@@ -133,12 +132,12 @@
 - name: 3.4.2 Ensure /etc/hosts.allow is configured (Scored)
   lineinfile:
     dest: /etc/hosts.allow
-    line: 'ALL:ALL'
+    line: 'ALL: ALL'
 
 - name: 3.4.3 Ensure /etc/hosts.deny is configured (Scored)
   lineinfile:
     dest: /etc/hosts.deny
-    line: ''
+    line: 'ALL: ALL'
 
 - name: 3.4.4 Ensure permissions on /etc/hosts.allow are configured (Scored)
   file:

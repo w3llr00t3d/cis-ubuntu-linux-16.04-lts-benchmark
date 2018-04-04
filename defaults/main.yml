@@ -2,13 +2,13 @@
 
 # defaults file for CIS-Ubuntu-Linux-16.04-LTS-Benchmark
 
-# Server Profile? Otherwise Workstation
-# server: true
+# Profile Applicability - 'server' or 'workstation'; see CIS documentation for more information.
+profile: server
 
-# Level-1-and-2 Profile? Otherwise Level-1 only.
-# level_1_and_2: true
+# Security Level - '1' or '2'; see CIS documentation for more information.
+level: 2
 
-# Re-partition volume
+# Re-partition Volume
 # repartition: false
 
 # Time Synchronization Package
@@ -23,6 +23,21 @@ net_ipv4_ip_forward: 0
 
 # Set to 'true' if you are NOT using another host based firewall such as AWS Security Groups
 use_iptables: false
+
+# Maximum size of auditd log before it's rotated
+max_log_file_auditd: 100
+
+# Keep logs (keep_logs) indefinietly or rotate logs (rotate)
+max_log_file_action: keep_logs
+
+# Remote Logging - Set to 'false' if you are using a a non-native log collector
+remote_logging: true
+
+# Prefered syslog package (rsyslog or syslog-ng) if using native logging
+syslog_package: rsyslog
+
+# Remote Logs Host Address
+remote_logs_host_address: 192.168.1.1
 
 # Sections
 initial_setup: true

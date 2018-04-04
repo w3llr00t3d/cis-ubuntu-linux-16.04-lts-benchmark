@@ -320,3 +320,31 @@
     state: stopped
     enabled: no
   when: nis.rc == 0
+
+- name: 2.3.1 Ensure NIS Client is not installed (Scored)
+  apt:
+    name: nis
+    state: absent
+
+- name: 2.3.2 Ensure rsh client is not installed (Scored)
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - rsh-client
+    - rsh-redone-client
+
+- name: 2.3.3 Ensure talk client is not installed (Scored)
+  apt:
+    name: talk
+    state: absent
+
+- name: 2.3.4 Ensure telnet client is not installed (Scored)
+  apt:
+    name: telnet
+    state: absent
+
+- name: 2.3.5 Ensure LDAP client is not installed (Scored)
+  apt:
+    name: ldap-utils
+    state: absent
