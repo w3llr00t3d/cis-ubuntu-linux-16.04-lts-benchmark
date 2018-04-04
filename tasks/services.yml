@@ -219,103 +219,103 @@
   ignore_errors: True
   changed_when: False
 
-  - command: dpkg-query -s exim
+- command: dpkg-query -s exim
   register: exim
   failed_when: False
   ignore_errors: True
   changed_when: False
 
-  - command: dpkg-query -s cyrus-imap
+- command: dpkg-query -s cyrus-imap
   register: cyrus_imap
   failed_when: False
   ignore_errors: True
   changed_when: False
 
-  - name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
-    service:
-      name: "{{ item }}"
-      state: stopped
-      enabled: no
-    with_items:
-      - dovecot
-      - exim
-      - cyrus-imap
-    when: dovecot.rc == 0 or exim.rc == 0 or cyrus_imap.rc == 0
+- name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  with_items:
+    - dovecot
+    - exim
+    - cyrus-imap
+  when: dovecot.rc == 0 or exim.rc == 0 or cyrus_imap.rc == 0
 
-  - command: dpkg-query -s smbd
-    register: smbd
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+- command: dpkg-query -s smbd
+  register: smbd
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
-  - name: 2.2.12 Ensure Samba is not enabled (Scored)
-    service:
-      name: smbd
-      state: stopped
-      enabled: no
-    when: smbd.rc == 0
+- name: 2.2.12 Ensure Samba is not enabled (Scored)
+  service:
+    name: smbd
+    state: stopped
+    enabled: no
+  when: smbd.rc == 0
 
-  - command: dpkg-query -s squid
-    register: squid
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+- command: dpkg-query -s squid
+  register: squid
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
-  - name: 2.2.13 Ensure HTTP Proxy Server is not enabled (Scored)
-    service:
-      name: squid
-      state: stopped
-      enabled: no
-    when: squid.rc == 0
+- name: 2.2.13 Ensure HTTP Proxy Server is not enabled (Scored)
+  service:
+    name: squid
+    state: stopped
+    enabled: no
+  when: squid.rc == 0
 
-  - command: dpkg-query -s snmpd
-    register: snmpd
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+- command: dpkg-query -s snmpd
+  register: snmpd
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
-  - name: 2.2.14 Ensure SNMP Server is not enabled (Scored)
-    service:
-      name: snmpd
-      state: stopped
-      enabled: no
-    when: snmpd.rc == 0
+- name: 2.2.14 Ensure SNMP Server is not enabled (Scored)
+  service:
+    name: snmpd
+    state: stopped
+    enabled: no
+  when: snmpd.rc == 0
 
-  - apt:
-      name: postfix
-      state: present
+- apt:
+    name: postfix
+    state: present
 
-  - name: 2.2.15 Ensure mail transfer agent is configured for local-only mode (Scored)
-    lineinfile:
-      dest: /etc/postfix/main.cf
-      regexp: '^inet_interfaces'
-      line: 'inet_interfaces = localhost'
-      state: present
-      create: no
-    notify: restart postfix
+- name: 2.2.15 Ensure mail transfer agent is configured for local-only mode (Scored)
+  lineinfile:
+    dest: /etc/postfix/main.cf
+    regexp: '^inet_interfaces'
+    line: 'inet_interfaces = localhost'
+    state: present
+    create: no
+  notify: restart postfix
 
-  - command: dpkg-query -s rsync
-    register: rsync
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+- command: dpkg-query -s rsync
+  register: rsync
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
-  - name: 2.2.16 Ensure rsync service is not enabled (Scored)
-    service:
-      name: rsync
-      state: stopped
-      enabled: no
-    when: rsync.rc == 0
+- name: 2.2.16 Ensure rsync service is not enabled (Scored)
+  service:
+    name: rsync
+    state: stopped
+    enabled: no
+  when: rsync.rc == 0
 
-  - command: dpkg-query -s nis
-    register: nis
-    failed_when: False
-    ignore_errors: True
-    changed_when: False
+- command: dpkg-query -s nis
+  register: nis
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
 
-  - name: 2.2.17 Ensure NIS Server is not enabled (Scored)
-    service:
-      name: nis
-      state: stopped
-      enabled: no
-    when: nis.rc == 0
+- name: 2.2.17 Ensure NIS Server is not enabled (Scored)
+  service:
+    name: nis
+    state: stopped
+    enabled: no
+  when: nis.rc == 0
