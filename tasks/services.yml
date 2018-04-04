@@ -1,5 +1,7 @@
 ---
 
+### Below needs to be review for proper disabling procedure ###
+
 - stat:
     path: /etc/inetd.conf
   register: inetd_conf
@@ -43,8 +45,7 @@
 - name: 2.1.1 Ensure chargen services are not enabled (Scored)
   lineinfile:
     dest: /etc/xinetd.conf
-    regexp: '^disable                = yes'
-    line: 'disable           = yes'
+      # Missing: Comment out or remove any lines starting with chargen from /etc/xinetd.conf
   when: xinetd_conf.stat.exists
 
 - name: 2.1.1 Ensure chargen services are not enabled (Scored)
@@ -54,7 +55,7 @@
     line: 'disable           = yes'
   when: xinetd_chargen.stat.exists
 
-### Missing benchamrks ###
+### Missing benchmarks ###
 
 - name: 2.2.1.1 Ensure time synchronization is in use (Not Scored)
   apt:

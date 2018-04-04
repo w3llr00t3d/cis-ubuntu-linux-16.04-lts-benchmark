@@ -3,17 +3,26 @@
 # defaults file for CIS-Ubuntu-Linux-16.04-LTS-Benchmark
 
 # Server Profile? Otherwise Workstation
-server: true
+# server: true
 
 # Level-1-and-2 Profile? Otherwise Level-1 only.
-level_1_and_2: true
+# level_1_and_2: true
 
 # Re-partition volume
-repartition: false
+# repartition: false
 
 # Time Synchronization Package
 time_sync_package: ntp
 time_sync_server: ntp.ubuntu.com
+
+# Set to '1' if Docker is installed (https://docs.docker.com/engine/userguide/networking/default_network/container-communication)
+net_ipv4_ip_forward: 0
+
+# Change to 'false' if using IPv6
+# ipv6_disabled: true
+
+# Set to 'true' if you are NOT using another host based firewall such as AWS Security Groups
+use_iptables: false
 
 # Sections
 initial_setup: true
