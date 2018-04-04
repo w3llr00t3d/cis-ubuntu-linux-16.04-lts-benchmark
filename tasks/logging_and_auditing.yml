@@ -383,7 +383,10 @@
   notify: restart syslog-ng
 
 - name: 4.2.4 Ensure permissions on all logfiles are configured (Scored)
-  shell: chmod -R g-wx,o-rwx /var/log/*
+  file:
+    path: /var/log
+    mode: g=wx,o=rwx
+    recurse: yes
 
 - name: 4.3 Ensure logrotate is configured (Not Scored)
   file:
