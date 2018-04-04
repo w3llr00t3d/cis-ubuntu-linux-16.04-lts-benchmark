@@ -1,4 +1,5 @@
 ---
+
 # defaults file for CIS-Ubuntu-Linux-16.04-LTS-Benchmark
 
 # Server Profile? Otherwise Workstation
@@ -6,6 +7,9 @@ server: true
 
 # Level-1-and-2 Profile? Otherwise Level-1 only.
 level_1_and_2: true
+
+# Re-partition volume
+repartition: false
 
 # Time Synchronization Package
 time_sync_package: ntp

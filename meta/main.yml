@@ -1,4 +1,5 @@
 ---
+
 galaxy_info:
   author: Dominic Pace
   description: Ansible role that configures Ubuntu Linux 16.04 LTS to CIS Benchmark v1.1.0
