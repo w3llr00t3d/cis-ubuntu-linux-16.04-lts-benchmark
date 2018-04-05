@@ -117,7 +117,7 @@
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: '^PermitRootLogin'
-    line: 'PermitRootLogin {{ permit_root_login }}'
+    line: 'PermitRootLogin no'
   notify: restart ssh
 
 - name: 5.2.9 Ensure SSH PermitEmptyPasswords is disabled (Scored)
