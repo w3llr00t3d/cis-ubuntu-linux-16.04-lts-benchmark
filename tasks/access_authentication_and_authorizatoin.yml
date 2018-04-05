@@ -271,25 +271,20 @@
   register: system_acounts
   changed_when: False
 
-- copy:
-    src: scripts/5.4.2.sh
-    dest: /opt/5.4.2.sh
-    owner: root
-    group: root
-    mode: 0700
-
 - name: 5.4.2 Ensure system accounts are non-login (Scored)
-  shell: /opt/5.4.2.sh
+  shell:
+    for user in `awk -F: '($3 < 1000) {print $1 }' /etc/passwd`; do
+      if [ $user != "root" ]; then
+        usermod -L $user
+        if [ $user != "sync" ] && [ $user != "shutdown" ] && [ $user != "halt" ]; then
+          usermod -s /usr/sbin/nologin $user
+        fi
+      fi
+    done
+  args:
+    executable: /bin/bash
   when: system_acounts.stdout != ""
-
-- name: prueba
-  file:
-    path: /opt/5.4.2.sh
-    owner: root
-    group: root
-    mode: 0700
-    state: absent
-
+  
 - name: 5.4.3 Ensure default group for the root account is GID 0 (Scored)
   command: grep "^root:" /etc/passwd | cut -f4 -d':'
   register: root_gid
