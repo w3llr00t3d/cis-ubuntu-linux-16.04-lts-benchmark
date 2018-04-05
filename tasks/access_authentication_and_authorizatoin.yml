@@ -272,7 +272,7 @@
   changed_when: False
 
 - name: 5.4.2 Ensure system accounts are non-login (Scored)
-  shell:
+  shell: |
     for user in `awk -F: '($3 < 1000) {print $1 }' /etc/passwd`; do
       if [ $user != "root" ]; then
         usermod -L $user
