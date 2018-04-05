@@ -1,6 +1,9 @@
 # CIS-Ubuntu-Linux-16.04-LTS-Benchmark
 Ansible role that configures Ubuntu Linux 16.04 LTS to CIS Benchmark
 
+## Requirements
+Ansible 2.3+
+
 ## Install Ansible
 ```
 sudo apt-get update && sudo apt-get install software-properties-common

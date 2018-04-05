@@ -11,8 +11,20 @@ level: 2
 # Re-partition Root Volume - Set to 'true' or 'fales' (default = false)
 #repartition: false
 
-# Disable SELinux - Set to 'true' or 'false' (default = false)
-disable_selinux: false
+# Enable AIDE Filesystem Integrity Checking - Set to 'true' or 'false' (default = true)
+enable_aide: true
+
+# Set GRUB Password - Set custom password by using the command 'grub-mkpasswd-pbkdf2' in Linux. The password below is for example purposes only.
+grub_password: grub.pbkdf2.sha512.10000.A1071BDA678E7DCE0B44D03B717F9ADE8856E9B4C4443D261E95C98FDE010E3B9C9AABF4C721F2FA42B0E6E482EA0C61AEC68971009609935D013B71554B9EA0.CEC99F94863E3CF28FBA76F96FEF58894E2F41891CECD0B28A0D088A46C4EDA4FF607E18D73A78830FF39BE14CB9BBE5F5D4CA7D11B03ACFE2071531FF1C3A06
+
+# Set ROOT Password - Set custom root password or leave it set to 'disabled' to skip this benchmark (default = disabled).
+root_password: disabled
+
+# Enable Mandatory Access Contorl - Set to 'selinux', 'apparmor' or 'disabled' (default = selinux)
+access_control: selinux
+
+# SELinux Mode - Set to 'enforing' or 'passive' (default = enforcing)
+selinux_mode: passive # CHANGE TO ENFORCING
 
 # Time Synchronization Package - Set to 'ntp' or 'chrony' (default = ntp)
 time_sync_package: ntp
@@ -47,9 +59,9 @@ syslog_package: rsyslog
 remote_logs_host_address: 192.168.1.1
 
 # Sections
-initial_setup: true
-services: true
-network_configuration: true
-logging_and_auditing: true
-access_authentication_and_authorizatoin: true
-system_maintenance: true
+initial_setup: True
+services: False
+network_configuration: False
+logging_and_auditing: False
+access_authentication_and_authorizatoin: False
+system_maintenance: False

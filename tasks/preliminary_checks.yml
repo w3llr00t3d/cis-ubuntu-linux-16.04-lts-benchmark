@@ -1,9 +1,9 @@
 ---
 
-  - name: Check if Ansible version is 2.0+
+  - name: Check if Ansible version is 2.3+
     debug:
-      msg: "Check if Ansible version is 2.0+"
-    failed_when: not ansible_version.full is version('2.0', '>=')
+      msg: "Check if Ansible version is 2.3+"
+    failed_when: not ansible_version.full is version('2.3', '>=')
 
   - name: Check if OS is Ubuntu 16.04 LTS (Xenial Xerus)
     debug:
