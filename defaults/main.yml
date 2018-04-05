@@ -2,24 +2,28 @@
 
 # defaults file for CIS-Ubuntu-Linux-16.04-LTS-Benchmark
 
-# Profile Applicability - 'server' or 'workstation'; see CIS documentation for more information.
+# Profile Applicability - Set to 'server' or 'workstation' (default = server); see CIS documentation for more information.
 profile: server
 
-# Security Level - '1' or '2'; see CIS documentation for more information.
+# Security Level - Set to '1' or '2' (default = 1); see CIS documentation for more information.
 level: 2
 
-# Re-partition Volume
-# repartition: false
+# Re-partition Root Volume - Set to 'true' or 'fales' (default = false)
+#repartition: false
 
-# Time Synchronization Package
+# Time Synchronization Package - Set to 'ntp' or 'chrony' (default = ntp)
 time_sync_package: ntp
+
+# Time Synchronization Server - Set to intranet server or internet server (default = ntp.ubuntu.com)
 time_sync_server: ntp.ubuntu.com
 
-# Set to '1' if Docker is installed (https://docs.docker.com/engine/userguide/networking/default_network/container-communication)
+# IPv4 IP Forwarding - Set to '1' if Docker is installed per https://docs.docker.com/engine/userguide/networking/default_network/container-communication (default = 0)
 net_ipv4_ip_forward: 0
 
-# Change to 'false' if using IPv6
-# ipv6_disabled: true
+# Disable IPv6 - Set to 'true' or 'false' depending on wheter you use IPv6 (default = true)
+#ipv6_disabled: true
+
+
 
 # Set to 'true' if you are NOT using another host based firewall such as AWS Security Groups
 use_iptables: false
