@@ -157,17 +157,17 @@
     line: 'LoginGraceTime 60'
   notify: restart ssh
 
-- name: 5.2.14 Ensure SSH access is limited (Scored)
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    regexp: '^{{item.name}}'
-    line: '{{item.name}} {{item.value}}'
-  with_items:
-    - { name: 'AllowUsers' , value: '{{ sshd_allow_users }}' }
-    - { name: 'AllowGroups' , value: '{{ sshd_allow_groups }}' }
-    - { name: 'DenyUsers' , value: '{{ sshd_deny_users }}' }
-    - { name: 'DenyGroups' , value: '{{ sshd_deny_groups }}' }
-  notify: restart ssh
+# - name: 5.2.14 Ensure SSH access is limited (Scored)
+#   lineinfile:
+#     dest: /etc/ssh/sshd_config
+#     regexp: '^{{item.name}}'
+#     line: '{{item.name}} {{item.value}}'
+#   with_items:
+#     - { name: 'AllowUsers' , value: '{{ sshd_allow_users }}' }
+#     - { name: 'AllowGroups' , value: '{{ sshd_allow_groups }}' }
+#     - { name: 'DenyUsers' , value: '{{ sshd_deny_users }}' }
+#     - { name: 'DenyGroups' , value: '{{ sshd_deny_groups }}' }
+#   notify: restart ssh
 
 # Repalce with 'file' motd later
 - name: 5.2.15 Ensure SSH warning banner is configured (Scored)

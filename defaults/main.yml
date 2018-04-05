@@ -11,6 +11,9 @@ level: 2
 # Re-partition Root Volume - Set to 'true' or 'fales' (default = false)
 #repartition: false
 
+# Disable SELinux - Set to 'true' or 'false' (default = false)
+disable_selinux: false
+
 # Time Synchronization Package - Set to 'ntp' or 'chrony' (default = ntp)
 time_sync_package: ntp
 
@@ -21,7 +24,7 @@ time_sync_server: ntp.ubuntu.com
 net_ipv4_ip_forward: 0
 
 # Disable IPv6 - Set to 'true' or 'false' depending on wheter you use IPv6 (default = true)
-#ipv6_disabled: true
+# disabled_ipv6: true
 
 
 
