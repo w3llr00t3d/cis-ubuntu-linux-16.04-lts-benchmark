@@ -135,7 +135,6 @@
   failed_when: False
   ignore_errors: True
   changed_when: False
-  when: access_control == "selinux"
 
 - name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
   apt:
@@ -149,7 +148,6 @@
   failed_when: False
   ignore_errors: True
   changed_when: False
-  when: access_control == "apparmor"
 
 - name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
   apt:
