@@ -165,107 +165,107 @@
 
 
 
-- name: 1.6.2.1 Ensure AppArmor is not disabled in bootloader configuration (Scored)
-  command: sed -i -r 's/apparmor=0//g' /boot/grub/grub.cfg
-  when: access_control == apparmor
-  notify: update grub
+# - name: 1.6.2.1 Ensure AppArmor is not disabled in bootloader configuration (Scored)
+#   command: sed -i -r 's/apparmor=0//g' /boot/grub/grub.cfg
+#   when: access_control == apparmor
+#   notify: update grub
 
-- name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
-  shell : apparmor_status|grep "0 processes are in complain mode"
-  register: apparmor_status_complain_output
-  failed_when: False
-  changed_when: False
+# - name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
+#   shell : apparmor_status|grep "0 processes are in complain mode"
+#   register: apparmor_status_complain_output
+#   failed_when: False
+#   changed_when: False
 
-- name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
-  shell : apparmor_status|grep "0 processes are unconfined"
-  register: apparmor_status_unconfined_output
-  failed_when: False
-  changed_when: False
+# - name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
+#   shell : apparmor_status|grep "0 processes are unconfined"
+#   register: apparmor_status_unconfined_output
+#   failed_when: False
+#   changed_when: False
 
-- name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
-  shell: aa-enforce /etc/apparmor.d/*
-  when: use_apparmor == True and apparmor_status_complain_output.rc == 1 and apparmor_status_unconfined_output == 1
-
-
-
-
-- name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
-  apt:
-    name: "{{ access_control }}"
-    state: present
-  when: access_control != "disabled"
+# - name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
+#   shell: aa-enforce /etc/apparmor.d/*
+#   when: use_apparmor == True and apparmor_status_complain_output.rc == 1 and apparmor_status_unconfined_output == 1
 
 
 
 
-- name: 1.7.1.1 Ensure message of the day is configured properly (Scored)
-  lineinfile:
-    dest: /etc/motd
-    create: yes
-    line: 'Authorized uses only. All activity may be monitored and reported.'
-    state: present
+# - name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
+#   apt:
+#     name: "{{ access_control }}"
+#     state: present
+#   when: access_control != "disabled"
 
-- name: 1.7.1.2 Ensure local login warning banner is configured properly (Not Scored)
-  shell: egrep '(\\v|\\r|\\m|\\s)' /etc/issue
-  register: egrep_os_infos
-  failed_when: egrep_os_infos.rc == 0
-  changed_when: False
 
-- name: 1.7.1.3 Ensure remote login warning banner is configured properly (Not Scored)
-  shell: egrep '(\\v|\\r|\\m|\\s)' /etc/issue.net
-  register: egrep_os_infos
-  failed_when: egrep_os_infos.rc == 0
-  changed_when: False
 
-- name: 1.7.1.4 Ensure permissions on /etc/motd are configured (Not Scored)
-  file:
-    path: /etc/motd
-    owner: root
-    group: root 
-    mode: 0644
 
-- name: 1.7.1.5 Ensure permissions on /etc/issue are configured (Scored)
-  file: 
-    path: /etc/issue
-    owner: root 
-    group: root 
-    mode: 0644
+# - name: 1.7.1.1 Ensure message of the day is configured properly (Scored)
+#   lineinfile:
+#     dest: /etc/motd
+#     create: yes
+#     line: 'Authorized uses only. All activity may be monitored and reported.'
+#     state: present
 
-- name: 1.7.1.6 Ensure permissions on /etc/issue.net are configured (Not Scored)
-  file:
-    path: /etc/issue.net
-    owner: root
-    group: root
-    mode: 0644
+# - name: 1.7.1.2 Ensure local login warning banner is configured properly (Not Scored)
+#   shell: egrep '(\\v|\\r|\\m|\\s)' /etc/issue
+#   register: egrep_os_infos
+#   failed_when: egrep_os_infos.rc == 0
+#   changed_when: False
 
-- name: 1.7.2 Ensure GDM login banner is configured (Scored)
-  stat:
-    path: /etc/dconf/profile/gdm
-  register: gdm_rule 
+# - name: 1.7.1.3 Ensure remote login warning banner is configured properly (Not Scored)
+#   shell: egrep '(\\v|\\r|\\m|\\s)' /etc/issue.net
+#   register: egrep_os_infos
+#   failed_when: egrep_os_infos.rc == 0
+#   changed_when: False
 
-- name: 1.7.2 Ensure GDM login banner is configured (Scored)
-  lineinfile:
-    dest: /etc/dconf/profile/gdm
-    regexp: '{{item.regexp}}'
-  with_items:
-    - { regexp: '^user-db:user' }
-    - { regexp: '^system-db:gdm' }
-    - { regexp: '^file-db:/usr/share/gdm/greeter-dconf-defaults' }
-  when: gdm_rule.stat.exists == True 
+# - name: 1.7.1.4 Ensure permissions on /etc/motd are configured (Not Scored)
+#   file:
+#     path: /etc/motd
+#     owner: root
+#     group: root 
+#     mode: 0644
 
-- name: 1.7.2 Ensure GDM login banner is configured (Scored)
-  lineinfile:
-    dest: /etc/dconf/db/gdm.d/01-banner-message
-    create: yes
-    regexp: "{{ item.regexp }}"
-  with_items:
-    - { regexp: '^[org/gnome/login-screen]' }
-    - { regexp: '^banner-message-enable=true' }
-    - { regexp: '^banner-message-text="Authorized uses only. All activity may be monitored and reported."^\' }
-  when: gdm_rule.stat.exists == True 
+# - name: 1.7.1.5 Ensure permissions on /etc/issue are configured (Scored)
+#   file: 
+#     path: /etc/issue
+#     owner: root 
+#     group: root 
+#     mode: 0644
 
-- name: 1.8 Ensure updates, patches, and additional security software are installed (Not Scored)
-  apt:
-    update_cache: yes
-    cache_valid_time: "3600"
-    upgrade: yes
+# - name: 1.7.1.6 Ensure permissions on /etc/issue.net are configured (Not Scored)
+#   file:
+#     path: /etc/issue.net
+#     owner: root
+#     group: root
+#     mode: 0644
+
+# - name: 1.7.2 Ensure GDM login banner is configured (Scored)
+#   stat:
+#     path: /etc/dconf/profile/gdm
+#   register: gdm_rule 
+
+# - name: 1.7.2 Ensure GDM login banner is configured (Scored)
+#   lineinfile:
+#     dest: /etc/dconf/profile/gdm
+#     regexp: '{{item.regexp}}'
+#   with_items:
+#     - { regexp: '^user-db:user' }
+#     - { regexp: '^system-db:gdm' }
+#     - { regexp: '^file-db:/usr/share/gdm/greeter-dconf-defaults' }
+#   when: gdm_rule.stat.exists == True 
+
+# - name: 1.7.2 Ensure GDM login banner is configured (Scored)
+#   lineinfile:
+#     dest: /etc/dconf/db/gdm.d/01-banner-message
+#     create: yes
+#     regexp: "{{ item.regexp }}"
+#   with_items:
+#     - { regexp: '^[org/gnome/login-screen]' }
+#     - { regexp: '^banner-message-enable=true' }
+#     - { regexp: '^banner-message-text="Authorized uses only. All activity may be monitored and reported."^\' }
+#   when: gdm_rule.stat.exists == True 
+
+# - name: 1.8 Ensure updates, patches, and additional security software are installed (Not Scored)
+#   apt:
+#     update_cache: yes
+#     cache_valid_time: "3600"
+#     upgrade: yes
