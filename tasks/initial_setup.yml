@@ -129,7 +129,7 @@
   notify: update grub
   when: access_control == "selinux"
 
-- name: 1.6.1.2 Ensure the SELinux state is enforcing (Scored)
+- name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
   command: dpkg -l selinux
   register: selinux_installed
   failed_when: False
@@ -137,11 +137,25 @@
   changed_when: False
   when: access_control == "selinux"
 
-- name: 1.6.1.2 Ensure the SELinux state is enforcing (Scored)
+- name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
   apt:
     name: selinux
     state: present
   when: selinux_installed.rc == 1 and access_control == "selinux"
+
+- name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
+  command: dpkg -l apparmor
+  register: apparmor_installed
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+  when: access_control == "apparmor"
+
+- name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
+  apt:
+    name: apparmor
+    state: present
+  when: apparmor_installed.rc == 1 and access_control == "apparmor"
 
 - name: 1.6.1.2 Ensure the SELinux state is enforcing (Scored)
   lineinfile:
@@ -161,39 +175,29 @@
   shell: ps -eZ | egrep "initrc" | egrep -vw "tr|ps|egrep|bash|awk" | tr ':' ' ' | awk '{print $NF }'
   when: selinux_installed.rc == 0 and access_control == "selinux"
 
+- name: 1.6.2.1 Ensure AppArmor is not disabled in bootloader configuration (Scored)
+  command: sed -i -r 's/apparmor=0//g' /boot/grub/grub.cfg
+  notify: update grub
+  when: access_control == "apparmor"
 
+- name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
+  shell : apparmor_status|grep "0 processes are in complain mode"
+  register: apparmor_status_enforcing
+  failed_when: False
+  changed_when: False
+  when: access_control == "apparmor"
 
+- name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
+  shell : apparmor_status|grep "0 processes are unconfined"
+  register: apparmor_status_unconfined
+  failed_when: False
+  changed_when: False
+  when: access_control == "apparmor"
 
+- name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
+  shell: aa-enforce /etc/apparmor.d/*
+  when:  access_control == "apparmor" and apparmor_status_enforcing.rc == 1 and apparmor_status_unconfined == 1
 
-# - name: 1.6.2.1 Ensure AppArmor is not disabled in bootloader configuration (Scored)
-#   command: sed -i -r 's/apparmor=0//g' /boot/grub/grub.cfg
-#   when: access_control == apparmor
-#   notify: update grub
-
-# - name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
-#   shell : apparmor_status|grep "0 processes are in complain mode"
-#   register: apparmor_status_complain_output
-#   failed_when: False
-#   changed_when: False
-
-# - name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
-#   shell : apparmor_status|grep "0 processes are unconfined"
-#   register: apparmor_status_unconfined_output
-#   failed_when: False
-#   changed_when: False
-
-# - name: 1.6.2.2 Ensure all AppArmor Profiles are enforcing (Scored)
-#   shell: aa-enforce /etc/apparmor.d/*
-#   when: use_apparmor == True and apparmor_status_complain_output.rc == 1 and apparmor_status_unconfined_output == 1
-
-
-
-
-# - name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
-#   apt:
-#     name: "{{ access_control }}"
-#     state: present
-#   when: access_control != "disabled"
 
 
 
