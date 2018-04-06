@@ -121,7 +121,7 @@
 - name: 1.6.1.1 Ensure SELinux is not disabled in bootloader configuration (Scored)
   lineinfile: 
     dest: /etc/default/grub
-    line: {{ item }}
+    line: "{{ item }}"
     state: present
   with_items:
     - 'GRUB_CMDLINE_LINUX_DEFAULT="quiet"' 

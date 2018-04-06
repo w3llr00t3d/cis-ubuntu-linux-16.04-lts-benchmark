@@ -5,7 +5,7 @@
 - include: preliminary_checks.yml
 
 - include: initial_setup.yml
-  when: initial-setup
+  when: initial_setup
 
 - include: services.yml
   when: services
