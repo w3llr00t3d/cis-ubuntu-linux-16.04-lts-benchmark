@@ -3,13 +3,13 @@
 # defaults file for CIS-Ubuntu-Linux-16.04-LTS-Benchmark
 
 # Profile Applicability - Set to 'server' or 'workstation' (default = server); see CIS documentation for more information.
-profile: server
+profile: server # WIP
 
 # Security Level - Set to '1' or '2' (default = 1); see CIS documentation for more information.
-level: 2
+level: 2 # WIP
 
 # Re-partition Root Volume - Set to 'true' or 'fales' (default = false)
-#repartition: false
+repartition: false # WIP
 
 # Enable AIDE Filesystem Integrity Checking - Set to 'true' or 'false' (default = true)
 enable_aide: true
@@ -20,47 +20,45 @@ grub_password: grub.pbkdf2.sha512.10000.A1071BDA678E7DCE0B44D03B717F9ADE8856E9B4
 # Set ROOT Password - Set custom root password or leave it set to 'disabled' to skip this benchmark (default = disabled).
 root_password: disabled
 
-# Enable Mandatory Access Contorl - Set to 'selinux', 'apparmor' or 'disabled' (default = selinux)
+# Enable Mandatory Access Contorl - Set to 'selinux', 'apparmor', or 'disabled' (default = selinux).
 access_control: selinux
 
-# SELinux Mode - Set to 'enforing' or 'passive' (default = enforcing)
-selinux_mode: passive # CHANGE TO ENFORCING
+# SELinux Mode - Set to 'enforing' or 'passive' (default = enforcing).
+selinux_mode: passive # CHANGE TO ENFORCING AFTER TESTING IS COMPLETE
 
-# Time Synchronization Package - Set to 'ntp' or 'chrony' (default = ntp)
+# Time Synchronization Package - Set to 'ntp' or 'chrony' (default = ntp).
 time_sync_package: ntp
 
-# Time Synchronization Server - Set to intranet server or internet server (default = ntp.ubuntu.com)
+# Time Synchronization Server - Set to intranet server or internet server (default = ntp.ubuntu.com).
 time_sync_server: ntp.ubuntu.com
 
-# IPv4 IP Forwarding - Set to '1' if Docker is installed per https://docs.docker.com/engine/userguide/networking/default_network/container-communication (default = 0)
+# IPv4 IP Forwarding - Set to '1' if Docker is installed per https://docs.docker.com/engine/userguide/networking/default_network/container-communication (default = 0).
 net_ipv4_ip_forward: 0
 
-# Disable IPv6 - Set to 'true' or 'false' depending on wheter you use IPv6 (default = true)
-# disabled_ipv6: true
+# Disable IPv6 - Set to 'true' or 'false' depending on wheter you use IPv6 (default = true).
+disabled_ipv6: true
 
+# Enable IPtables - Set to 'true' or 'false' depending on wheter you are using another host based firewall such as AWS Security Groups (default = true).
+use_iptables: false # CHANGE TO ENFORCING AFTER TESTING IS COMPLETE
 
-
-# Set to 'true' if you are NOT using another host based firewall such as AWS Security Groups
-use_iptables: false
-
-# Maximum size of auditd log before it's rotated
+# Maximum File Size of Logs - Set the prefered max file size of logs in MBs before it's rotated (default = 100).
 max_log_file_auditd: 100
 
-# Keep logs (keep_logs) indefinietly or rotate logs (rotate)
+# Log Retention - Set to 'keep_logs' indefinietly or 'rotate' to rotate logs over time (default = keep_logs).
 max_log_file_action: keep_logs
 
-# Remote Logging - Set to 'false' if you are using a a non-native log collector
+# Remote Logging - Set to 'true', or 'false' if you are using a a non-native log collector (default = true).
 remote_logging: true
 
-# Prefered syslog package (rsyslog or syslog-ng) if using native logging
+# Prefered Syslog Package - Set to 'rsyslog' or 'syslog-ng' if using native logging (default = rsyslog).
 syslog_package: rsyslog
 
-# Remote Logs Host Address
+# Remote Logs Host Address - Set IP address of the remote log server. The IP address below is for example only.
 remote_logs_host_address: 192.168.1.1
 
-# Sections
+# Benchmark Sections
 initial_setup: True
-services: False
+services: True
 network_configuration: False
 logging_and_auditing: False
 access_authentication_and_authorizatoin: False
