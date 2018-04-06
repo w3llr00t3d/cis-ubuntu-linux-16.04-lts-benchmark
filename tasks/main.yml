@@ -21,4 +21,6 @@
 
 - include: system_maintenance.yml
   when: system_maintenance
-  
+
+- include: extras.yml
+  when: extras

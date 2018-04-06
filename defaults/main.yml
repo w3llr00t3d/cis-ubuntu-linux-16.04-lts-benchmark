@@ -63,3 +63,4 @@ network_configuration: False
 logging_and_auditing: False
 access_authentication_and_authorizatoin: False
 system_maintenance: False
+extras: False # This is an optional set of task that furture secure the OS' configuraiton beyond CIS' benchmarks (default = false).

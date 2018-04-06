@@ -71,7 +71,7 @@
   check_mode: no
   register: world_files
 
-# Need a better idea for dealing with world writeable file discovery
+# Need a better idea for dealing with world writeable file discovery, this just prints it out
 - name: 6.1.10 Ensure no world writable files exist (Scored)
   debug: "{{ item }}"
   with_items: "{{world_files.stdout_lines}}"
