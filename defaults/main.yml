@@ -8,9 +8,6 @@ profile: server # WIP
 # Security Level - Set to '1' or '2' (default = 1); see CIS documentation for more information.
 level: 2 # WIP
 
-# Re-partition Root Volume - Set to 'true' or 'fales' (default = false)
-repartition: false # WIP
-
 # Enable AIDE Filesystem Integrity Checking - Set to 'true' or 'false' (default = true)
 enable_aide: true
 
@@ -59,8 +56,10 @@ remote_logs_host_address: 192.168.1.1
 # Benchmark Sections
 initial_setup: True
 services: True
-network_configuration: False
-logging_and_auditing: False
-access_authentication_and_authorizatoin: False
-system_maintenance: False
-extras: False # This is an optional set of task that furture secure the OS' configuraiton beyond CIS' benchmarks (default = false).
+network_configuration: True
+logging_and_auditing: True
+access_authentication_and_authorizatoin: True
+system_maintenance: True
+
+# This is an optional set of task that furture secure the OS' configuraiton beyond CIS' benchmarks (default = false).
+extras: True # CHANGE TO ENFORCING AFTER TESTING IS COMPLETE
