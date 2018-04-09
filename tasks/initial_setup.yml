@@ -59,7 +59,7 @@
   debug:
     msg: "/!\ Ensure removable partitions have noexec option"
 
-- 1.1.20 Ensure sticky bit is set on all world-writable directories (Scored)
+- name: 1.1.20 Ensure sticky bit is set on all world-writable directories (Scored)
   shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 -print 2>/dev/null
   failed_when: False
   changed_when: False

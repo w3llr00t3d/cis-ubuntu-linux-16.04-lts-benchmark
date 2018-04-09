@@ -1,12 +1,12 @@
 ---
 
-- shell: dpkg --get-selections | grep -v deinstall | awk '{ print $1 }'
+- name: 6.1.1 Audit system file permissions (Not Scored) 
+  shell: dpkg --get-selections | grep -v deinstall | awk '{ print $1 }'
   register: dpkg_output
 
 - name: 6.1.1 Audit system file permissions (Not Scored) 
   shell: dpkg --verify {{ item }}
   with_items: "{{ dpkg_output.stdout_lines }}"
-  when: dpkg_verify == true
   
 - name: 6.1.2 Ensure permissions on /etc/passwd are configured (Scored)
   file:
@@ -208,14 +208,14 @@
 - debug: var=home_directories_exist.stdout_lines
 
 - name: 6.2.8 Ensure users' home directories permissions are 750 or more restrictive (Scored)
-  shell: find /home/* -type d -maxdepth 0
+  shell: find /home/* -maxdepth 0 -type d 
   register: user_dirs
 
 - name: 6.2.8 Ensure users' home directories permissions are 750 or more restrictive (Scored)
   file:
-    path: {{ item }}
+    path: "{{ item }}"
     mode: 0750
-  with_items: "{{ user_dirs }}"
+  with_items: "{{ user_dirs.stdout_lines }}"
 
 - name: 6.2.9 Ensure users own their home directories (Scored)
   shell: |
@@ -354,7 +354,8 @@
 - name: 6.2.15 Ensure all groups in /etc/passwd exist in /etc/group (Scored)
   shell: |
     for i in $(cut -s -d: -f4 /etc/passwd | sort -u ); do
-      grep -q -P "^.*?:[^:]*:$i:" /etc/group  if [ $? -ne 0 ]; then
+      grep -q -P "^.*?:[^:]*:$i:" /etc/group
+      if [ $? -ne 0 ]; then
         echo "Group $i is referenced by /etc/passwd but does not exist in /etc/group"
       fi
     done 
@@ -416,7 +417,8 @@
   shell: |
     cat /etc/group | cut -f1 -d":" | sort -n | uniq -c | while read x ; do
       [ -z "${x}" ] && break
-      set - $x  if [ $1 -gt 1 ]; then
+      set - $x
+      if [ $1 -gt 1 ]; then
         gids=`gawk -F: '($1 == n) { print $3 }' n=$2 /etc/group | xargs`
         echo "Duplicate Group Name ($2): ${gids}"
       fi
