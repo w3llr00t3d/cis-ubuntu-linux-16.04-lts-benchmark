@@ -55,11 +55,11 @@ remote_logs_host_address: 192.168.1.1
 
 # Benchmark Sections
 initial_setup: True
-services: True
-network_configuration: True
-logging_and_auditing: True
-access_authentication_and_authorizatoin: True
-system_maintenance: True
+services: False
+network_configuration: False
+logging_and_auditing: False
+access_authentication_and_authorizatoin: False
+system_maintenance: False
 
 # This is an optional set of task that furture secure the OS' configuraiton beyond CIS' benchmarks (default = false).
-extras: True # CHANGE TO ENFORCING AFTER TESTING IS COMPLETE
+extras: False # CHANGE TO ENFORCING AFTER TESTING IS COMPLETE

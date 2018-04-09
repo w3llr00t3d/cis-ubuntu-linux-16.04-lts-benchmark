@@ -42,20 +42,20 @@
     state: present
     create: yes
 
-# Anyone to identify removeable media?
-- name: 1.1.17 Ensure nodev option set on removable media partitions (Not Scored)
-  debug:
-    msg: "/!\ Ensure removable partitions have nodev option"
+# # Anyone to identify removeable media?
+# - name: 1.1.17 Ensure nodev option set on removable media partitions (Not Scored)
+#   debug:
+#     msg: "/!\ Ensure removable partitions have nodev option"
 
-# Anyone to identify removeable media?
-- name: 1.1.18 Ensure nosuid option set on removable media partitions (Not Scored)
-  debug:
-    msg: "/!\ Ensure removable partitions have nosuid option"
+# # Anyone to identify removeable media?
+# - name: 1.1.18 Ensure nosuid option set on removable media partitions (Not Scored)
+#   debug:
+#     msg: "/!\ Ensure removable partitions have nosuid option"
 
-# Anyone to identify removeable media?
-- name: 1.1.19 Ensure noexec option set on removable media partitions (Not Scored)
-  debug:
-    msg: "/!\ Ensure removable partitions have noexec option"
+# # Anyone to identify removeable media?
+# - name: 1.1.19 Ensure noexec option set on removable media partitions (Not Scored)
+#   debug:
+#     msg: "/!\ Ensure removable partitions have noexec option"
 
 - name: 1.1.20 Ensure sticky bit is set on all world-writable directories (Scored)
   shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 -print 2>/dev/null
@@ -70,18 +70,18 @@
       mode: "a+t"
   with_items: "{{ sticky_bit_dirs.stdout_lines }}"
 
-- name: 1.1.21 Disable Automounting (Scored)
-  shell: dpkg -l|grep autofs
-  register: autofs
-  failed_when: False
-  ignore_errors: True
-  changed_when: False
+# - name: 1.1.21 Disable Automounting (Scored)
+#   shell: dpkg -l|grep autofs
+#   register: autofs
+#   failed_when: False
+#   ignore_errors: True
+#   changed_when: False
 
-- name: 1.1.21 Disable Automounting (Scored)
-  systemd:
-    name: autofs
-    enabled: no
-  when: autofs.rc == 0
+# - name: 1.1.21 Disable Automounting (Scored)
+#   systemd:
+#     name: autofs
+#     enabled: no
+#   when: autofs.rc == 0
 
 - name: 1.2.1 Ensure package manager repositories are configured (Not Scored)
   lineinfile:
@@ -123,46 +123,45 @@
     job: "/usr/bin/aide --config /etc/aide/aide.conf --check "
   when: enable_aide == True
 
-- name: 1.4.1 Ensure permissions on bootloader config are configured (Scored)
-  file:
-    path: /boot/grub/grub.cfg
-    owner: root
-    group: root
-    mode: 0600
+# - name: 1.4.1 Ensure permissions on bootloader config are configured (Scored)
+#   file:
+#     path: /boot/grub/grub.cfg
+#     owner: root
+#     group: root
+#     mode: 0600
 
-- name: 1.4.2 Ensure bootloader password is set (Scored)
-  command: grep "^password" /boot/grub/grub.cfg
-  register: boot_password
-  failed_when: False
-  ignore_errors: True
-  changed_when: False
+# - name: 1.4.2 Ensure bootloader password is set (Scored)
+#   command: grep "^password" /boot/grub/grub.cfg
+#   register: boot_password
+#   failed_when: False
+#   ignore_errors: True
+#   changed_when: False
 
-- name: 1.4.2 Ensure bootloader password is set (Scored)
-  lineinfile:
-      path: /etc/grub.d/40_custom
-      regexp: '^{{ item.name }}'
-      line: '{{ item.name }}{{ item.value }} {{ item.value2 }}'
-      state: present
-  with_items:
-    - { name: 'set superusers=' , value: '"root"' , value2: '' }
-    - { name: 'password_pbkdf2 ' , value: 'root' , value2: '{{ grub_password }}' }
-  notify: update grub
-  when: boot_password.rc == 1
+# - name: 1.4.2 Ensure bootloader password is set (Scored)
+#   lineinfile:
+#       path: /etc/grub.d/40_custom
+#       regexp: '^{{ item.name }}'
+#       line: '{{ item.name }}{{ item.value }} {{ item.value2 }}'
+#       state: present
+#   with_items:
+#     - { name: 'set superusers=' , value: '"root"' , value2: '' }
+#     - { name: 'password_pbkdf2 ' , value: 'root' , value2: '{{ grub_password }}' }
+#   notify: update grub
+#   when: boot_password.rc == 1
  
+# - name: 1.4.3 Ensure authentication required for single user mode (Scored)
+#   command: grep "^root:[*\!]:" /etc/shadow
+#   register: root_password_set
+#   failed_when: False
+#   ignore_errors: True
+#   changed_when: False
 
-- name: 1.4.3 Ensure authentication required for single user mode (Scored)
-  command: grep "^root:[*\!]:" /etc/shadow
-  register: root_password_set
-  failed_when: False
-  ignore_errors: True
-  changed_when: False
-
-- name: 1.4.3 Ensure authentication required for single user mode (Scored)
-  user:
-    name: root
-    state: present
-    password: "{{ root_password }}"
-  when: root_password_set.rc == 0 and root_password != "disabled"
+# - name: 1.4.3 Ensure authentication required for single user mode (Scored)
+#   user:
+#     name: root
+#     state: present
+#     password: "{{ root_password }}"
+#   when: root_password_set.rc == 0 and root_password != "disabled"
 
 - name: 1.5.1 Ensure core dumps are restricted (Scored)
   command: grep "hard core" /etc/security/limits.conf
