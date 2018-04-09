@@ -17,8 +17,8 @@ grub_password: grub.pbkdf2.sha512.10000.A1071BDA678E7DCE0B44D03B717F9ADE8856E9B4
 # Set ROOT Password - Set custom root password or leave it set to 'disabled' to skip this benchmark (default = disabled).
 root_password: disabled
 
-# Enable Mandatory Access Contorl - Set to 'selinux', 'apparmor', or 'disabled' (default = selinux).
-access_control: selinux
+# Enable Mandatory Access Contorl - Set to 'selinux', 'apparmor', or 'disabled' (default = disabled).
+access_control: disabled
 
 # SELinux Mode - Set to 'enforing' or 'passive' (default = enforcing).
 selinux_mode: passive # CHANGE TO ENFORCING AFTER TESTING IS COMPLETE

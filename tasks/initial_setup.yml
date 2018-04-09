@@ -42,8 +42,6 @@
     state: present
     create: yes
 
-
-
 # Anyone to identify removeable media?
 - name: 1.1.17 Ensure nodev option set on removable media partitions (Not Scored)
   debug:
@@ -226,6 +224,7 @@
   apt:
     name: selinux
     state: present
+  ignore_errors: True
   when: selinux_installed.rc == 1 and access_control == "selinux"
 
 - name: 1.6.3 Ensure SELinux or AppArmor are installed (Not Scored)
