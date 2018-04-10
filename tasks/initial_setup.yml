@@ -108,23 +108,24 @@
     enabled: no
   when: autofs.rc == 0
 
-- name: 1.2.1 Ensure package manager repositories are configured (Not Scored)
-  lineinfile:
-    path: /etc/apt/sources.list
-    line: '{{ item }}'
-    state: present
-    create: yes
-  with_items:
-    - 'deb http://archive.ubuntu.com/ubuntu/ xenial main restricted'
-    - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted'
-    - 'deb http://archive.ubuntu.com/ubuntu/ xenial universe'
-    - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates universe'
-    - 'deb http://archive.ubuntu.com/ubuntu/ xenial multiverse'
-    - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates multiverse'
-    - 'deb http://archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse'
-    - 'deb http://security.ubuntu.com/ubuntu xenial-security main restricted'
-    - 'deb http://security.ubuntu.com/ubuntu xenial-security universe'
-    - 'deb http://security.ubuntu.com/ubuntu xenial-security multiverse'
+# DISABLED! - This should already be set by default and can cause issues with AWS AMI's.
+# - name: 1.2.1 Ensure package manager repositories are configured (Not Scored)
+#   lineinfile:
+#     path: /etc/apt/sources.list
+#     line: '{{ item }}'
+#     state: present
+#     create: yes
+#   with_items:
+#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial main restricted'
+#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted'
+#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial universe'
+#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates universe'
+#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial multiverse'
+#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates multiverse'
+#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse'
+#     - 'deb http://security.ubuntu.com/ubuntu xenial-security main restricted'
+#     - 'deb http://security.ubuntu.com/ubuntu xenial-security universe'
+#     - 'deb http://security.ubuntu.com/ubuntu xenial-security multiverse'
 
 - name: 1.2.2 Ensure GPG keys are configured (Not Scored)
   lineinfile:
