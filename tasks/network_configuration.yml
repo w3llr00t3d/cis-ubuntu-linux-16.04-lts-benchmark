@@ -12,6 +12,12 @@
     value: 0
     state: present
 
+- name: 3.1.2 Ensure packet redirect sending is disabled (Scored)
+  sysctl:
+    name: net.ipv4.conf.default.send_redirects
+    value: 0
+    state: present
+
 - name: 3.2.1 Ensure source routed packets are not accepted (Scored)
   sysctl:
     name: net.ipv4.conf.all.accept_source_route
@@ -131,12 +137,12 @@
 
 - name: 3.4.2 Ensure /etc/hosts.allow is configured (Scored)
   lineinfile:
-    dest: /etc/hosts.allow
+    path: /etc/hosts.allow
     line: 'ALL: ALL'
 
 - name: 3.4.3 Ensure /etc/hosts.deny is configured (Scored)
   lineinfile:
-    dest: /etc/hosts.deny
+    path: /etc/hosts.deny
     line: 'ALL: ALL'
 
 - name: 3.4.4 Ensure permissions on /etc/hosts.allow are configured (Scored)
@@ -155,33 +161,33 @@
 
 - name: 3.5.1 Ensure DCCP is disabled (Not Scored)
   lineinfile:
-    dest: /etc/modprobe.d/CIS.conf
+    path: /etc/modprobe.d/CIS.conf
     line: 'install dccp /bin/true'
     state: present
     create: True
 
 - name: 3.5.2 Ensure SCTP is disabled (Not Scored)
   lineinfile:
-    dest: /etc/modprobe.d/CIS.conf
+    path: /etc/modprobe.d/CIS.conf
     line: 'install sctp /bin/true'
     state: present
     create: True
 
 - name: 3.5.3 Ensure RDS is disabled (Not Scored)
   lineinfile:
-    dest: /etc/modprobe.d/CIS.conf
+    path: /etc/modprobe.d/CIS.conf
     line: 'install rds /bin/true'
     state: present
     create: True
 
 - name: 3.5.4 Ensure TIPC is disabled (Not Scored)
   lineinfile:
-    dest: /etc/modprobe.d/CIS.conf
+    path: /etc/modprobe.d/CIS.conf
     line: 'install tipc /bin/true'
     state: present
     create: True
 
-### Fix iptables later ###
+### Fix IPtables later ###
 
 # - name: 3.6.1 Ensure iptables is installed (Scored)
 #   apt:
@@ -190,7 +196,7 @@
 #   with_items:
 #     - iptables
 #     - iptables-persistent
-#   when: use_iptables == true
+#   when: use_iptables == True
 
 # - shell: iptables -L|egrep 'INPUT|FORWARD|OUTPUT'|grep "policy DROP"
 #   register: drop_policy
@@ -246,11 +252,8 @@
 #   failed_when: False
 #   changed_when: False
 
-# - name: 3.6.5 Ensure firewall rules exist for all open ports (Scored)
-#   debug:
-#     msg: "Check firewall rules for the listening ports: {{ listening_ports.stdout_lines }}"
-
-- apt:
+- name: 3.7 Ensure wireless interfaces are disabled (Not Scored)
+  apt:
     name: rfkill
     state: present
 

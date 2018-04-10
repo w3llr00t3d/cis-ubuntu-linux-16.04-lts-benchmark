@@ -83,18 +83,6 @@
   ignore_errors: True
   when: mount_dev_shm.rc == 1
 
-- name: 1.1.17 Ensure nodev option set on removable media partitions (Not Scored)
-  debug:
-    msg: "/!\ Ensure removable partitions have nodev option"
-
-- name: 1.1.18 Ensure nosuid option set on removable media partitions (Not Scored)
-  debug:
-    msg: "/!\ Ensure removable partitions have nosuid option"
-
-- name: 1.1.19 Ensure noexec option set on removable media partitions (Not Scored)
-  debug:
-    msg: "/!\ Ensure removable partitions have noexec option"
-
 - name: 1.1.20 Ensure sticky bit is set on all world-writable directories (Scored)
   shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 -print 2>/dev/null
   failed_when: False
