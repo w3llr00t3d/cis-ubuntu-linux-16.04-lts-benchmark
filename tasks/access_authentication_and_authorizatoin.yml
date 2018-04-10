@@ -73,76 +73,76 @@
 
 - name: 5.2.2 Ensure SSH Protocol is set to 2 (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^Protocol'
     line: 'Protocol 2'
   notify: restart ssh
 
 - name: 5.2.3 Ensure SSH LogLevel is set to INFO (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^LogLevel'
     line: 'LogLevel INFO'
   notify: restart ssh
 
 - name: 5.2.4 Ensure SSH X11 forwarding is disabled (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^X11Forwarding'
     line: 'X11Forwarding no'
   notify: restart ssh
 
 - name: 5.2.5 Ensure SSH MaxAuthTries is set to 4 or less (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^MaxAuthTries'
     line: 'MaxAuthTries 4'
   notify: restart ssh
 
 - name: 5.2.6 Ensure SSH IgnoreRhosts is enabled (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^IgnoreRhosts'
     line: 'IgnoreRhosts yes'
   notify: restart ssh
 
 - name: 5.2.7 Ensure SSH HostbasedAuthentication is disabled (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^HostbasedAuthentication'
     line: 'HostbasedAuthentication no'
   notify: restart ssh
 
 - name: 5.2.8 Ensure SSH root login is disabled (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^PermitRootLogin'
     line: 'PermitRootLogin no'
   notify: restart ssh
 
 - name: 5.2.9 Ensure SSH PermitEmptyPasswords is disabled (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^PermitEmptyPasswords'
     line: 'PermitEmptyPasswords no'
   notify: restart ssh
 
 - name: 5.2.10 Ensure SSH PermitUserEnvironment is disabled (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^PermitUserEnvironment'
     line: 'PermitUserEnvironment no'
   notify: restart ssh
 
 - name: 5.2.11 Ensure only approved MAC algorithms are used (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
-    line: 'MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com'
+    path: /etc/ssh/sshd_config
+    line: 'MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com'
   notify: restart ssh
 
 - name: 5.2.12 Ensure SSH Idle Timeout Interval is configured (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^{{item.name}}'
     line: '{{item.name}} {{item.value}}'
   with_items:
@@ -152,14 +152,15 @@
 
 - name: 5.2.13 Ensure SSH LoginGraceTime is set to one minute or less (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^LoginGraceTime'
     line: 'LoginGraceTime 60'
   notify: restart ssh
 
+# Disabled until I can devise a more elegant solution
 # - name: 5.2.14 Ensure SSH access is limited (Scored)
 #   lineinfile:
-#     dest: /etc/ssh/sshd_config
+#     path: /etc/ssh/sshd_config
 #     regexp: '^{{item.name}}'
 #     line: '{{item.name}} {{item.value}}'
 #   with_items:
@@ -169,10 +170,9 @@
 #     - { name: 'DenyGroups' , value: '{{ sshd_deny_groups }}' }
 #   notify: restart ssh
 
-# Repalce with 'file' motd later
 - name: 5.2.15 Ensure SSH warning banner is configured (Scored)
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: '^Banner'
     line: 'Banner /etc/issue.net'
   notify: restart ssh
@@ -210,7 +210,7 @@
   lineinfile:
     name: /etc/pam.d/common-password
     regexp: '^password\s+sufficient\s+pam_unix.so'
-    line: 'password sufficient pam_unix.so remember=5'
+    line: 'password sufficient pam_unix.so remember={{ remember_passwords }}'
 
 - name: 5.3.4 Ensure password hashing algorithm is SHA-512 (Scored)
   lineinfile:
@@ -218,43 +218,49 @@
     regexp: '^password\s+\S+\s+pam_unix.so'
     line: 'password sufficient pam_unix.so sha512'
 
-- command: grep -oP '(?<=^PASS_MAX_DAYS\s)[0-9]+' /etc/login.defs
+- name: 5.4.1.1 Ensure password expiration is 90 days or less (Scored)
+  command: grep -oP '(?<=^PASS_MAX_DAYS\s)[0-9]+' /etc/login.defs
   register: pass_max_days
   changed_when: False
   check_mode: no
 
 - name: 5.4.1.1 Ensure password expiration is 90 days or less (Scored)
   lineinfile:
-    dest: /etc/login.defs
-    line: 'PASS_MAX_DAYS 90'
+    path: /etc/login.defs
+    line: 'PASS_MAX_DAYS {{ max_password_age }}'
     regexp: '^PASS_MAX_DAYS'
-  when: pass_max_days.stdout|int > 90
+  when: pass_max_days.stdout|int > {{ max_password_age }}
 
-- command: grep -oP '(?<=^PASS_MIN_DAYS\s)[0-9]+' /etc/login.defs
+- name: 5.4.1.2 Ensure minimum days between password changes is 7 or more (Scored)
+  command: grep -oP '(?<=^PASS_MIN_DAYS\s)[0-9]+' /etc/login.defs
   register: pass_min_days
   changed_when: False
   check_mode: no
 
-- name: 5.4.1.2 Ensure minimum days between password changes is 7 or more (Scored)
-  lineinfile:
-    dest: /etc/login.defs
-    line: 'PASS_MIN_DAYS 7'
-    regexp: '^PASS_MIN_DAYS'
-  when: pass_min_days.stdout|int < 7
+# DISABLED! - The intent of this control is to prevent users from rotating through re-used password but I've disabled this control as it is a major security risk.
+#             A user may have legitimate reasons to change their password 2 or more times in 7 days.
+# - name: 5.4.1.2 Ensure minimum days between password changes is 7 or more (Scored)
+#   lineinfile:
+#     path: /etc/login.defs
+#     line: 'PASS_MIN_DAYS 7'
+#     regexp: '^PASS_MIN_DAYS'
+#   when: pass_min_days.stdout|int < 7
 
-- command: grep -oP '(?<=^PASS_WARN_AGE\s)[0-9]+' /etc/login.defs
+- name: 5.4.1.3 Ensure password expiration warning days is 7 or more (Scored)
+  command: grep -oP '(?<=^PASS_WARN_AGE\s)[0-9]+' /etc/login.defs
   register: pass_warn_age
   changed_when: False
   check_mode: no
 
 - name: 5.4.1.3 Ensure password expiration warning days is 7 or more (Scored)
   lineinfile:
-    dest: /etc/login.defs
+    path: /etc/login.defs
     line: 'PASS_WARN_AGE 7'
     regexp: '^PASS_WARN_AGE'
   when: pass_warn_age.stdout|int < 7
 
-- command: grep INACTIVE /etc/login.defs
+- name: 5.4.1.4 Ensure inactive password lock is 30 days or less (Scored)
+  command: grep INACTIVE /etc/login.defs
   changed_when: False
   failed_when: False
   check_mode: no
@@ -262,12 +268,13 @@
 
 - name: 5.4.1.4 Ensure inactive password lock is 30 days or less (Scored)
   lineinfile:
-    dest: /etc/login.defs
-    line: 'INACTIVE=35'
+    path: /etc/login.defs
+    line: 'INACTIVE=30'
     state: present
   when: lock_inactive_rc.rc == 1
 
-- shell: egrep -v "^\+" /etc/passwd | awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" && $1!="halt" && $3<1000 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print}'
+- name: 5.4.2 Ensure system accounts are non-login (Scored)
+  shell: egrep -v "^\+" /etc/passwd | awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" && $1!="halt" && $3<1000 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print}'
   register: system_acounts
   changed_when: False
 
@@ -296,7 +303,7 @@
 
 - name: 5.4.4 Ensure default user umask is 027 or more restrictive (Scored)
   lineinfile:
-    dest: "{{ item }}"
+    path: "{{ item }}"
     line: 'umask 027'
     regexp: '^umask'
     state: present
@@ -304,7 +311,18 @@
     - '/etc/bash.bashrc'
     - '/etc/profile'
 
-- stat:
+- name: 5.4.5 Ensure default user shell timeout is 900 seconds or less (Scored)
+  lineinfile:
+    path: "{{ item }}"
+    line: 'TMOUT=600'
+    regexp: '^TMOUT'
+    state: present
+  with_items:
+    - '/etc/bashrc'
+    - '/etc/profile'
+
+- name: 5.5 Ensure root login is restricted to system console (Not Scored)
+  stat:
     path: /etc/securetty
   register: securetty_file
 
@@ -313,8 +331,9 @@
   debug: msg='*** Check /etc/securetty for console allowed for root access ***'
   when: securetty_file.stat.exists == True
 
+### Needs review
 - name: 5.6 Ensure access to the su command is restricted (Scored)
   lineinfile:
-    dest: /etc/pam.d/su
+    path: /etc/pam.d/su
     line: 'auth            required        pam_wheel.so use_uid'
     state: present

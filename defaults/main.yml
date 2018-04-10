@@ -53,10 +53,16 @@ syslog_package: rsyslog
 # Remote Logs Host Address - Set IP address of the remote log server. The IP address below is for example only.
 remote_logs_host_address: 192.168.1.1
 
+# Pasword Re-use - Set to the maximum number of passwords to remember to deny reuse (default = 5).
+remember_passwords: 5
+
+# Max Password Age - Set to the maximum password age in days (default = 365).
+max_password_age: 365
+
 # Benchmark Sections
-initial_setup: True
-services: True
-network_configuration: True
+initial_setup: False
+services: False
+network_configuration: False
 logging_and_auditing: True
 access_authentication_and_authorizatoin: False
 system_maintenance: False
