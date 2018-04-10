@@ -57,7 +57,7 @@ remote_logs_host_address: 192.168.1.1
 initial_setup: True
 services: True
 network_configuration: True
-logging_and_auditing: False
+logging_and_auditing: True
 access_authentication_and_authorizatoin: False
 system_maintenance: False
 
