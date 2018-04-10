@@ -1,473 +1,473 @@
 ---
 
-# - name: 2.1.1 Ensure chargen services are not enabled (Scored)
-#   stat:
-#     path: /etc/xinetd.d/chargen
-#   register: xinetd_chargen
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.1 Ensure chargen services are not enabled (Scored)
-#   lineinfile:
-#     path: /etc/xinetd.d/chargen
-#     regexp: '^disable                = yes'
-#     line: 'disable           = yes'
-#   when: xinetd_chargen.stat.exists
-
-# - name: 2.1.2 Ensure daytime services are not enabled (Scored)
-#   stat:
-#     path: /etc/xinetd.d/daytime
-#   register: xinetd_daytime
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.2 Ensure daytime services are not enabled (Scored)
-#   lineinfile:
-#     path: /etc/xinetd.d/daytime
-#     regexp: '^disable                = yes'
-#     line: 'disable           = yes'
-#   when: xinetd_daytime.stat.exists
-
-# - name: 2.1.3 Ensure discard services are not enabled (Scored)
-#   stat:
-#     path: /etc/xinetd.d/discard
-#   register: xinetd_discard
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.3 Ensure discard services are not enabled (Scored)
-#   lineinfile:
-#     path: /etc/xinetd.d/discard
-#     regexp: '^disable                = yes'
-#     line: 'disable           = yes'
-#   when: xinetd_discard.stat.exists
-
-# - name: 2.1.4 Ensure echo services are not enabled (Scored)
-#   stat:
-#     path: /etc/xinetd.d/echo
-#   register: xinetd_echo
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.4 Ensure echo services are not enabled (Scored)
-#   lineinfile:
-#     path: /etc/xinetd.d/echo
-#     regexp: '^disable                = yes'
-#     line: 'disable           = yes'
-#   when: xinetd_echo.stat.exists
-
-# - name: 2.1.5 Ensure time services are not enabled (Scored)
-#   stat:
-#     path: /etc/xinetd.d/time
-#   register: xinetd_time
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.5 Ensure time services are not enabled (Scored)
-#   lineinfile:
-#     path: /etc/xinetd.d/time
-#     regexp: '^disable                = yes'
-#     line: 'disable           = yes'
-#   when: xinetd_time.stat.exists
-
-# - name: 2.1.6 Ensure rsh server is not enabled (Scored)
-#   stat:
-#     path: /etc/xinetd.d/rsh
-#   register: xinetd_rsh
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.6 Ensure rsh server is not enabled (Scored)
-#   lineinfile:
-#     path: /etc/xinetd.d/rsh
-#     regexp: '^disable                = yes'
-#     line: 'disable           = yes'
-#   when: xinetd_rsh.stat.exists
-
-# - name: 2.1.7 Ensure talk server is not enabled (Scored)
-#   stat:
-#     path: /etc/xinetd.d/talk
-#   register: xinetd_talk
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.7 Ensure talk server is not enabled (Scored)
-#   lineinfile:
-#     path: /etc/xinetd.d/talk
-#     regexp: '^disable                = yes'
-#     line: 'disable           = yes'
-#   when: xinetd_talk.stat.exists
-
-# - name: 2.1.8 Ensure telnet server is not enabled (Scored)
-#   stat:
-#     path: /etc/xinetd.d/telnet
-#   register: xinetd_telnet
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.8 Ensure telnet server is not enabled (Scored)
-#   lineinfile:
-#     path: /etc/xinetd.d/telnet
-#     regexp: '^disable                = yes'
-#     line: 'disable           = yes'
-#   when: xinetd_telnet.stat.exists
-
-# - name: 2.1.9 Ensure tftp server is not enabled (Scored)
-#   stat:
-#     path: /etc/xinetd.d/tftp
-#   register: xinetd_tftp
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.9 Ensure tftp server is not enabled (Scored)
-#   lineinfile:
-#     path: /etc/xinetd.d/tftp
-#     regexp: '^disable                = yes'
-#     line: 'disable           = yes'
-#   when: xinetd_tftp.stat.exists
-
-# - name: 2.1.10 Ensure xinetd is not enabled (Scored)
-#   command: dpkg -l xinetd
-#   register: xinetd_installed
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.10 Ensure xinetd is not enabled (Scored)
-#   systemd:
-#     name: xinetd
-#     state: stopped
-#   when: xinetd_installed.rc == 0
-
-# - name: 2.1.11 Ensure openbsd-inetd is not installed (Scored) 
-#   command: dpkg -l openbsd-inetd
-#   register: openbsd_inetd_installed
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.1.11 Ensure openbsd-inetd is not installed (Scored) 
-#   systemd:
-#     name: openbsd-inetd
-#     state: stopped
-#   when: openbsd_inetd_installed.rc == 0
-
-# - name: 2.2.1.1 Ensure time synchronization is in use (Not Scored)
-#   apt:
-#     name: "{{ time_sync_package }}"
-#     state: present
-
-# - name: 2.2.1.2 Ensure ntp is configured (Scored)
-#   lineinfile:
-#     path: "{{ item.name }}"
-#     regexp: '{{ item.expression }}'
-#     line: '{{ item.value }}'
-#   with_items:
-#     - { name: '/etc/ntp.conf' , expression: '^server' , value: 'pool {{ time_sync_server }}' }
-#     - { name: '/etc/ntp.conf' , expression: '^restrict -4' , value: 'restrict -4 default kod nomodify notrap nopeer noquery' }
-#     - { name: '/etc/ntp.conf' , expression: '^restrict -6' , value: 'restrict -6 default kod nomodify notrap nopeer noquery' }
-#     - { name: '/etc/init.d/ntp', expression: '^RUNASUSER' , value: 'RUNASUSER=ntp' }
-#   when: time_sync_package  == "ntp"
-#   notify: restart ntp
-
-# - name: 2.2.1.3 Ensure chrony is configured (Scored)
-#   lineinfile:
-#     path: "{{ item.name }}"
-#     regexp: '{{ item.expression }}'
-#     line: '{{ item.value }}'
-#   with_items:
-#     - { name: '/etc/chrony/chrony.conf', expression: '^server', value: 'server {{ time_sync_server }}' }
-#     - { name: '/etc/chrony/chrony.conf', expression: '^pool', value: '' }
-#   when: time_sync_package  == "chrony"
-#   notify: restart chrony
-
-# - name: 2.2.2 Ensure X Window System is not installed (Scored)
-#   apt:
-#     name: xserver-xorg-core*
-#     purge: yes
-#     state: absent
-
-# - name: 2.2.3 Ensure Avahi Server is not enabled (Scored)
-#   command: dpkg-query -s avahi-daemon
-#   register: avahi_daemon
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.3 Ensure Avahi Server is not enabled (Scored)
-#   service:
-#     name: avahi-daemon
-#     state: stopped
-#     enabled: no
-#   when: avahi_daemon.rc == 0
-
-# - name: 2.2.4 Ensure CUPS is not enabled (Scored)
-#   command: dpkg-query -s cups-server-common
-#   register: cups_server
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.4 Ensure CUPS is not enabled (Scored)
-#   service:
-#     name: cups
-#     state: stopped
-#     enabled: no
-#   when: cups_server.rc == 0
-
-# - name: 2.2.5 Ensure DHCP Server is not enabled (Scored)
-#   command: dpkg-query -s isc-dhcp-server
-#   register: dhcp_server
-#   failed_when: False 
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.5 Ensure DHCP Server is not enabled (Scored)
-#   command: dpkg-query -s isc-dhcp-server6
-#   register: dhcp6_server
-#   failed_when: False 
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.5 Ensure DHCP Server is not enabled (Scored)
-#   service:
-#     name: "{{ item }}"
-#     state: stopped
-#     enabled: no
-#   with_items:
-#     - isc-dhcp-server
-#     - isc-dhcp-server6
-#   when: dhcp_server.rc == 0 or dhcp6_server.rc == 0
-
-# - name: 2.2.6 Ensure LDAP server is not enabled (Scored)
-#   command: dpkg-query -s slapd
-#   register: slapd
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.6 Ensure LDAP server is not enabled (Scored)
-#   service:
-#     name: slapd
-#     state: stopped
-#     enabled: no
-#   when: slapd.rc == 0
-
-# - name: 2.2.7 Ensure NFS and RPC are not enabled (Scored)
-#   command: dpkg-query -s nfs-kernel-server
-#   register: nfs_server
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.7 Ensure NFS and RPC are not enabled (Scored)
-#   command: dpkg-query -s rpcbind
-#   register: rpcbind
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.7 Ensure NFS and RPC are not enabled (Scored)
-#   service:
-#     name: "{{ item }}"
-#     state: stopped
-#     enabled: no
-#   with_items:
-#     - rpcbind
-#     - nfs-server
-#   when: nfs_server.rc == 0 or rpcbind.rc == 0
-
-# - name: 2.2.8 Ensure DNS Server is not enabled (Scored)
-#   command: dpkg-query -s bind9
-#   register: bind9
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.8 Ensure DNS Server is not enabled (Scored)
-#   service:
-#     name: bind9
-#     state: stopped
-#     enabled: no
-#   when: bind9.rc == 0
-
-# - name: 2.2.9 Ensure FTP Server is not enabled (Scored)
-#   command: dpkg-query -s vsftpd
-#   register: vsftpd
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.9 Ensure FTP Server is not enabled (Scored)
-#   service:
-#     name: vsftpd
-#     state: stopped
-#     enabled: no
-#   when: vsftpd.rc == 0
-
-# - name: 2.2.10 Ensure HTTP server is not enabled (Scored)
-#   command: dpkg-query -s apache2
-#   register: apache2
-#   failed_when: False 
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.10 Ensure HTTP server is not enabled (Scored) 
-#   service:
-#     name: apache2
-#     state: stopped
-#     enabled: no
-#   when: apache2.rc == 0
-
-# - name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
-#   command: dpkg-query -s dovecot
-#   register: dovecot
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
-#   command: dpkg-query -s exim
-#   register: exim
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
-#   command: dpkg-query -s cyrus-imap
-#   register: cyrus_imap
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
-#   service:
-#     name: "{{ item }}"
-#     state: stopped
-#     enabled: no
-#   with_items:
-#     - dovecot
-#     - exim
-#     - cyrus-imap
-#   when: dovecot.rc == 0 or exim.rc == 0 or cyrus_imap.rc == 0
-
-# - name: 2.2.12 Ensure Samba is not enabled (Scored)
-#   command: dpkg-query -s smbd
-#   register: smbd
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.12 Ensure Samba is not enabled (Scored)
-#   service:
-#     name: smbd
-#     state: stopped
-#     enabled: no
-#   when: smbd.rc == 0
-
-# - name: 2.2.13 Ensure HTTP Proxy Server is not enabled (Scored)
-#   command: dpkg-query -s squid
-#   register: squid
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.13 Ensure HTTP Proxy Server is not enabled (Scored)
-#   service:
-#     name: squid
-#     state: stopped
-#     enabled: no
-#   when: squid.rc == 0
-
-# - name: 2.2.14 Ensure SNMP Server is not enabled (Scored)
-#   command: dpkg-query -s snmpd
-#   register: snmpd
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.14 Ensure SNMP Server is not enabled (Scored)
-#   service:
-#     name: snmpd
-#     state: stopped
-#     enabled: no
-#   when: snmpd.rc == 0
-
-# - name: 2.2.15 Ensure mail transfer agent is configured for local-only mode (Scored)
-#   apt:
-#     name: postfix
-#     state: present
-
-# - name: 2.2.15 Ensure mail transfer agent is configured for local-only mode (Scored)
-#   lineinfile:
-#     path: /etc/postfix/main.cf
-#     regexp: '^inet_interfaces'
-#     line: 'inet_interfaces = localhost'
-#     state: present
-#     create: no
-#   notify: restart postfix
-
-# - name: 2.2.16 Ensure rsync service is not enabled (Scored)
-#   command: dpkg-query -s rsync
-#   register: rsync
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.16 Ensure rsync service is not enabled (Scored)
-#   service:
-#     name: rsync
-#     state: stopped
-#     enabled: no
-#   when: rsync.rc == 0
-
-# - name: 2.2.17 Ensure NIS Server is not enabled (Scored)
-#   command: dpkg-query -s nis
-#   register: nis
-#   failed_when: False
-#   ignore_errors: True
-#   changed_when: False
-
-# - name: 2.2.17 Ensure NIS Server is not enabled (Scored)
-#   service:
-#     name: nis
-#     state: stopped
-#     enabled: no
-#   when: nis.rc == 0
-
-# - name: 2.3.1 Ensure NIS Client is not installed (Scored)
-#   apt:
-#     name: nis
-#     state: absent
-
-# - name: 2.3.2 Ensure rsh client is not installed (Scored)
-#   apt:
-#     name: "{{ item }}"
-#     state: absent
-#   with_items:
-#     - rsh-client
-#     - rsh-redone-client
-
-# - name: 2.3.3 Ensure talk client is not installed (Scored)
-#   apt:
-#     name: talk
-#     state: absent
-
-# - name: 2.3.4 Ensure telnet client is not installed (Scored)
-#   apt:
-#     name: telnet
-#     state: absent
-
-# - name: 2.3.5 Ensure LDAP client is not installed (Scored)
-#   apt:
-#     name: ldap-utils
-#     state: absent
+- name: 2.1.1 Ensure chargen services are not enabled (Scored)
+  stat:
+    path: /etc/xinetd.d/chargen
+  register: xinetd_chargen
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.1 Ensure chargen services are not enabled (Scored)
+  lineinfile:
+    path: /etc/xinetd.d/chargen
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_chargen.stat.exists
+
+- name: 2.1.2 Ensure daytime services are not enabled (Scored)
+  stat:
+    path: /etc/xinetd.d/daytime
+  register: xinetd_daytime
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.2 Ensure daytime services are not enabled (Scored)
+  lineinfile:
+    path: /etc/xinetd.d/daytime
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_daytime.stat.exists
+
+- name: 2.1.3 Ensure discard services are not enabled (Scored)
+  stat:
+    path: /etc/xinetd.d/discard
+  register: xinetd_discard
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.3 Ensure discard services are not enabled (Scored)
+  lineinfile:
+    path: /etc/xinetd.d/discard
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_discard.stat.exists
+
+- name: 2.1.4 Ensure echo services are not enabled (Scored)
+  stat:
+    path: /etc/xinetd.d/echo
+  register: xinetd_echo
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.4 Ensure echo services are not enabled (Scored)
+  lineinfile:
+    path: /etc/xinetd.d/echo
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_echo.stat.exists
+
+- name: 2.1.5 Ensure time services are not enabled (Scored)
+  stat:
+    path: /etc/xinetd.d/time
+  register: xinetd_time
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.5 Ensure time services are not enabled (Scored)
+  lineinfile:
+    path: /etc/xinetd.d/time
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_time.stat.exists
+
+- name: 2.1.6 Ensure rsh server is not enabled (Scored)
+  stat:
+    path: /etc/xinetd.d/rsh
+  register: xinetd_rsh
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.6 Ensure rsh server is not enabled (Scored)
+  lineinfile:
+    path: /etc/xinetd.d/rsh
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_rsh.stat.exists
+
+- name: 2.1.7 Ensure talk server is not enabled (Scored)
+  stat:
+    path: /etc/xinetd.d/talk
+  register: xinetd_talk
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.7 Ensure talk server is not enabled (Scored)
+  lineinfile:
+    path: /etc/xinetd.d/talk
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_talk.stat.exists
+
+- name: 2.1.8 Ensure telnet server is not enabled (Scored)
+  stat:
+    path: /etc/xinetd.d/telnet
+  register: xinetd_telnet
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.8 Ensure telnet server is not enabled (Scored)
+  lineinfile:
+    path: /etc/xinetd.d/telnet
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_telnet.stat.exists
+
+- name: 2.1.9 Ensure tftp server is not enabled (Scored)
+  stat:
+    path: /etc/xinetd.d/tftp
+  register: xinetd_tftp
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.9 Ensure tftp server is not enabled (Scored)
+  lineinfile:
+    path: /etc/xinetd.d/tftp
+    regexp: '^disable                = yes'
+    line: 'disable           = yes'
+  when: xinetd_tftp.stat.exists
+
+- name: 2.1.10 Ensure xinetd is not enabled (Scored)
+  command: dpkg -l xinetd
+  register: xinetd_installed
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.10 Ensure xinetd is not enabled (Scored)
+  systemd:
+    name: xinetd
+    state: stopped
+  when: xinetd_installed.rc == 0
+
+- name: 2.1.11 Ensure openbsd-inetd is not installed (Scored) 
+  command: dpkg -l openbsd-inetd
+  register: openbsd_inetd_installed
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.11 Ensure openbsd-inetd is not installed (Scored) 
+  systemd:
+    name: openbsd-inetd
+    state: stopped
+  when: openbsd_inetd_installed.rc == 0
+
+- name: 2.2.1.1 Ensure time synchronization is in use (Not Scored)
+  apt:
+    name: "{{ time_sync_package }}"
+    state: present
+
+- name: 2.2.1.2 Ensure ntp is configured (Scored)
+  lineinfile:
+    path: "{{ item.name }}"
+    regexp: '{{ item.expression }}'
+    line: '{{ item.value }}'
+  with_items:
+    - { name: '/etc/ntp.conf' , expression: '^server' , value: 'pool {{ time_sync_server }}' }
+    - { name: '/etc/ntp.conf' , expression: '^restrict -4' , value: 'restrict -4 default kod nomodify notrap nopeer noquery' }
+    - { name: '/etc/ntp.conf' , expression: '^restrict -6' , value: 'restrict -6 default kod nomodify notrap nopeer noquery' }
+    - { name: '/etc/init.d/ntp', expression: '^RUNASUSER' , value: 'RUNASUSER=ntp' }
+  when: time_sync_package  == "ntp"
+  notify: restart ntp
+
+- name: 2.2.1.3 Ensure chrony is configured (Scored)
+  lineinfile:
+    path: "{{ item.name }}"
+    regexp: '{{ item.expression }}'
+    line: '{{ item.value }}'
+  with_items:
+    - { name: '/etc/chrony/chrony.conf', expression: '^server', value: 'server {{ time_sync_server }}' }
+    - { name: '/etc/chrony/chrony.conf', expression: '^pool', value: '' }
+  when: time_sync_package  == "chrony"
+  notify: restart chrony
+
+- name: 2.2.2 Ensure X Window System is not installed (Scored)
+  apt:
+    name: xserver-xorg-core*
+    purge: yes
+    state: absent
+
+- name: 2.2.3 Ensure Avahi Server is not enabled (Scored)
+  command: dpkg-query -s avahi-daemon
+  register: avahi_daemon
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.3 Ensure Avahi Server is not enabled (Scored)
+  service:
+    name: avahi-daemon
+    state: stopped
+    enabled: no
+  when: avahi_daemon.rc == 0
+
+- name: 2.2.4 Ensure CUPS is not enabled (Scored)
+  command: dpkg-query -s cups-server-common
+  register: cups_server
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.4 Ensure CUPS is not enabled (Scored)
+  service:
+    name: cups
+    state: stopped
+    enabled: no
+  when: cups_server.rc == 0
+
+- name: 2.2.5 Ensure DHCP Server is not enabled (Scored)
+  command: dpkg-query -s isc-dhcp-server
+  register: dhcp_server
+  failed_when: False 
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.5 Ensure DHCP Server is not enabled (Scored)
+  command: dpkg-query -s isc-dhcp-server6
+  register: dhcp6_server
+  failed_when: False 
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.5 Ensure DHCP Server is not enabled (Scored)
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  with_items:
+    - isc-dhcp-server
+    - isc-dhcp-server6
+  when: dhcp_server.rc == 0 or dhcp6_server.rc == 0
+
+- name: 2.2.6 Ensure LDAP server is not enabled (Scored)
+  command: dpkg-query -s slapd
+  register: slapd
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.6 Ensure LDAP server is not enabled (Scored)
+  service:
+    name: slapd
+    state: stopped
+    enabled: no
+  when: slapd.rc == 0
+
+- name: 2.2.7 Ensure NFS and RPC are not enabled (Scored)
+  command: dpkg-query -s nfs-kernel-server
+  register: nfs_server
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.7 Ensure NFS and RPC are not enabled (Scored)
+  command: dpkg-query -s rpcbind
+  register: rpcbind
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.7 Ensure NFS and RPC are not enabled (Scored)
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  with_items:
+    - rpcbind
+    - nfs-server
+  when: nfs_server.rc == 0 or rpcbind.rc == 0
+
+- name: 2.2.8 Ensure DNS Server is not enabled (Scored)
+  command: dpkg-query -s bind9
+  register: bind9
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.8 Ensure DNS Server is not enabled (Scored)
+  service:
+    name: bind9
+    state: stopped
+    enabled: no
+  when: bind9.rc == 0
+
+- name: 2.2.9 Ensure FTP Server is not enabled (Scored)
+  command: dpkg-query -s vsftpd
+  register: vsftpd
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.9 Ensure FTP Server is not enabled (Scored)
+  service:
+    name: vsftpd
+    state: stopped
+    enabled: no
+  when: vsftpd.rc == 0
+
+- name: 2.2.10 Ensure HTTP server is not enabled (Scored)
+  command: dpkg-query -s apache2
+  register: apache2
+  failed_when: False 
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.10 Ensure HTTP server is not enabled (Scored) 
+  service:
+    name: apache2
+    state: stopped
+    enabled: no
+  when: apache2.rc == 0
+
+- name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
+  command: dpkg-query -s dovecot
+  register: dovecot
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
+  command: dpkg-query -s exim
+  register: exim
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
+  command: dpkg-query -s cyrus-imap
+  register: cyrus_imap
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.11 Ensure IMAP and POP3 server is not enabled (Scored)
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  with_items:
+    - dovecot
+    - exim
+    - cyrus-imap
+  when: dovecot.rc == 0 or exim.rc == 0 or cyrus_imap.rc == 0
+
+- name: 2.2.12 Ensure Samba is not enabled (Scored)
+  command: dpkg-query -s smbd
+  register: smbd
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.12 Ensure Samba is not enabled (Scored)
+  service:
+    name: smbd
+    state: stopped
+    enabled: no
+  when: smbd.rc == 0
+
+- name: 2.2.13 Ensure HTTP Proxy Server is not enabled (Scored)
+  command: dpkg-query -s squid
+  register: squid
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.13 Ensure HTTP Proxy Server is not enabled (Scored)
+  service:
+    name: squid
+    state: stopped
+    enabled: no
+  when: squid.rc == 0
+
+- name: 2.2.14 Ensure SNMP Server is not enabled (Scored)
+  command: dpkg-query -s snmpd
+  register: snmpd
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.14 Ensure SNMP Server is not enabled (Scored)
+  service:
+    name: snmpd
+    state: stopped
+    enabled: no
+  when: snmpd.rc == 0
+
+- name: 2.2.15 Ensure mail transfer agent is configured for local-only mode (Scored)
+  apt:
+    name: postfix
+    state: present
+
+- name: 2.2.15 Ensure mail transfer agent is configured for local-only mode (Scored)
+  lineinfile:
+    path: /etc/postfix/main.cf
+    regexp: '^inet_interfaces'
+    line: 'inet_interfaces = localhost'
+    state: present
+    create: no
+  notify: restart postfix
+
+- name: 2.2.16 Ensure rsync service is not enabled (Scored)
+  command: dpkg-query -s rsync
+  register: rsync
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.16 Ensure rsync service is not enabled (Scored)
+  service:
+    name: rsync
+    state: stopped
+    enabled: no
+  when: rsync.rc == 0
+
+- name: 2.2.17 Ensure NIS Server is not enabled (Scored)
+  command: dpkg-query -s nis
+  register: nis
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.2.17 Ensure NIS Server is not enabled (Scored)
+  service:
+    name: nis
+    state: stopped
+    enabled: no
+  when: nis.rc == 0
+
+- name: 2.3.1 Ensure NIS Client is not installed (Scored)
+  apt:
+    name: nis
+    state: absent
+
+- name: 2.3.2 Ensure rsh client is not installed (Scored)
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - rsh-client
+    - rsh-redone-client
+
+- name: 2.3.3 Ensure talk client is not installed (Scored)
+  apt:
+    name: talk
+    state: absent
+
+- name: 2.3.4 Ensure telnet client is not installed (Scored)
+  apt:
+    name: telnet
+    state: absent
+
+- name: 2.3.5 Ensure LDAP client is not installed (Scored)
+  apt:
+    name: ldap-utils
+    state: absent
