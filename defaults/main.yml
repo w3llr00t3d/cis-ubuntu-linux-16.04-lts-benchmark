@@ -60,10 +60,10 @@ remember_passwords: 5
 max_password_age: 365
 
 # Benchmark Sections
-initial_setup: False
-services: False
-network_configuration: False
-logging_and_auditing: True
+initial_setup: True
+services: True
+network_configuration: True
+logging_and_auditing: False
 access_authentication_and_authorizatoin: False
 system_maintenance: False
 
