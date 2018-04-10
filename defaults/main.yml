@@ -55,7 +55,7 @@ remote_logs_host_address: 192.168.1.1
 
 # Benchmark Sections
 initial_setup: True
-services: False
+services: True
 network_configuration: False
 logging_and_auditing: False
 access_authentication_and_authorizatoin: False

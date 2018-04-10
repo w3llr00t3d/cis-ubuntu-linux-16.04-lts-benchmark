@@ -148,6 +148,19 @@
     state: stopped
   when: xinetd_installed.rc == 0
 
+- name: 2.1.11 Ensure openbsd-inetd is not installed (Scored) 
+  command: dpkg -l openbsd-inetd
+  register: openbsd_inetd_installed
+  failed_when: False
+  ignore_errors: True
+  changed_when: False
+
+- name: 2.1.11 Ensure openbsd-inetd is not installed (Scored) 
+  systemd:
+    name: openbsd-inetd
+    state: stopped
+  when: openbsd_inetd_installed.rc == 0
+
 - name: 2.2.1.1 Ensure time synchronization is in use (Not Scored)
   apt:
     name: "{{ time_sync_package }}"

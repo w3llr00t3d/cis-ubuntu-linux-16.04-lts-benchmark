@@ -27,7 +27,7 @@ EOF
 ```
 
 ## Configure Playbook
-defaults/main.yml
+sudo nano roles/cis/defaults/main.yml
 
 ## Run Playbook
 ```
