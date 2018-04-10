@@ -42,7 +42,6 @@
     state: present
     create: yes
 
-
 - name: 1.1.14 Ensure nodev option set on /dev/shm partition (Scored)
   shell: mount | grep /dev/shm|grep nodev
   register: mount_dev_shm
@@ -109,24 +108,23 @@
     enabled: no
   when: autofs.rc == 0
 
-# Why does this cause alterations?
-# - name: 1.2.1 Ensure package manager repositories are configured (Not Scored)
-#   lineinfile:
-#     path: /etc/apt/sources.list
-#     line: '{{ item }}'
-#     state: present
-#     create: yes
-#   with_items:
-#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial main restricted'
-#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted'
-#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial universe'
-#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates universe'
-#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial multiverse'
-#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates multiverse'
-#     - 'deb http://archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse'
-#     - 'deb http://security.ubuntu.com/ubuntu xenial-security main restricted'
-#     - 'deb http://security.ubuntu.com/ubuntu xenial-security universe'
-#     - 'deb http://security.ubuntu.com/ubuntu xenial-security multiverse'
+- name: 1.2.1 Ensure package manager repositories are configured (Not Scored)
+  lineinfile:
+    path: /etc/apt/sources.list
+    line: '{{ item }}'
+    state: present
+    create: yes
+  with_items:
+    - 'deb http://archive.ubuntu.com/ubuntu/ xenial main restricted'
+    - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted'
+    - 'deb http://archive.ubuntu.com/ubuntu/ xenial universe'
+    - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates universe'
+    - 'deb http://archive.ubuntu.com/ubuntu/ xenial multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu/ xenial-updates multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse'
+    - 'deb http://security.ubuntu.com/ubuntu xenial-security main restricted'
+    - 'deb http://security.ubuntu.com/ubuntu xenial-security universe'
+    - 'deb http://security.ubuntu.com/ubuntu xenial-security multiverse'
 
 - name: 1.2.2 Ensure GPG keys are configured (Not Scored)
   lineinfile:
@@ -164,17 +162,17 @@
   ignore_errors: True
   changed_when: False
 
-# - name: 1.4.2 Ensure bootloader password is set (Scored)
-#   lineinfile:
-#       path: /etc/grub.d/40_custom
-#       regexp: '^{{ item.name }}'
-#       line: '{{ item.name }}{{ item.value }} {{ item.value2 }}'
-#       state: present
-#   with_items:
-#     - { name: 'set superusers=' , value: '"root"' , value2: '' }
-#     - { name: 'password_pbkdf2 ' , value: 'root' , value2: '{{ grub_password }}' }
-#   notify: update grub
-#   when: boot_password.rc == 1
+- name: 1.4.2 Ensure bootloader password is set (Scored)
+  lineinfile:
+      path: /etc/grub.d/00_header 
+      regexp: '^{{ item.name }}'
+      line: '{{ item.name }}{{ item.value }} {{ item.value2 }}'
+      state: present
+  with_items:
+    - { name: 'set superusers=' , value: '"root"' , value2: '' }
+    - { name: 'password_pbkdf2 ' , value: 'root' , value2: '{{ grub_password }}' }
+  notify: update grub
+  when: boot_password.rc == 1
  
 - name: 1.4.3 Ensure authentication required for single user mode (Scored)
   command: grep "^root:[*\!]:" /etc/shadow
