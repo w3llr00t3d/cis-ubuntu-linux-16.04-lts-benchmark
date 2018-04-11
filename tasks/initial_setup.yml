@@ -165,16 +165,28 @@
 
 - name: 1.4.2 Ensure bootloader password is set (Scored)
   lineinfile:
-      path: /etc/grub.d/00_header 
-      regexp: '^{{ item.name }}'
-      line: '{{ item.name }}{{ item.value }} {{ item.value2 }}'
+      path: /etc/grub.d/10_linux
+      regexp: '^{{ item.old }}'
+      line: '{{ item.new }}'
       state: present
   with_items:
-    - { name: 'set superusers=' , value: '"root"' , value2: '' }
-    - { name: 'password_pbkdf2 ' , value: 'root' , value2: '{{ grub_password }}' }
+    - { old: 'echo "menuentry \'$(echo "$title" | grub_quote)\'' , new: 'echo "menuentry \'$(echo "$title" | grub_quote)\' --unrestricted ' }
+    - { old: 'echo "menuentry \'$(echo "$os" | grub_quote)\'' , new: 'echo "menuentry \'$(echo "$os" | grub_quote)\' --unrestricted ' }
   notify: update grub
   when: boot_password.rc == 1
- 
+
+# - name: 1.4.2 Ensure bootloader password is set (Scored)
+#   lineinfile:
+#       path: /etc/grub.d/40_custom 
+#       regexp: '^{{ item.name }}'
+#       line: '{{ item.name }}{{ item.value }} {{ item.value2 }}'
+#       state: present
+#   with_items:
+#     - { name: 'set superusers=' , value: '"root"' , value2: '' }
+#     - { name: 'password_pbkdf2 ' , value: 'root' , value2: '{{ grub_password }}' }
+#   notify: update grub
+#   when: boot_password.rc == 1
+
 - name: 1.4.3 Ensure authentication required for single user mode (Scored)
   command: grep "^root:[*\!]:" /etc/shadow
   register: root_password_set
