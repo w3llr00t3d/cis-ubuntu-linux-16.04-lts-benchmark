@@ -163,17 +163,18 @@
   ignore_errors: True
   changed_when: False
 
-- name: 1.4.2 Ensure bootloader password is set (Scored)
-  lineinfile:
-      path: /etc/grub.d/10_linux
-      regexp: '^{{ item.old }}'
-      line: '{{ item.new }}'
-      state: present
-  with_items:
-    - { old: 'echo "menuentry \'$(echo "$title" | grub_quote)\'' , new: 'echo "menuentry \'$(echo "$title" | grub_quote)\' --unrestricted ' }
-    - { old: 'echo "menuentry \'$(echo "$os" | grub_quote)\'' , new: 'echo "menuentry \'$(echo "$os" | grub_quote)\' --unrestricted ' }
-  notify: update grub
-  when: boot_password.rc == 1
+### Needs fixing
+# - name: 1.4.2 Ensure bootloader password is set (Scored)
+#   lineinfile:
+#       path: /etc/grub.d/10_linux
+#       regexp: '^{{ item.old }}'
+#       line: '{{ item.new }}'
+#       state: present
+#   with_items:
+#     - { old: 'echo "menuentry \'$(echo "$title" | grub_quote)\'' , new: 'echo "menuentry \'$(echo "$title" | grub_quote)\' --unrestricted ' }
+#     - { old: 'echo "menuentry \'$(echo "$os" | grub_quote)\'' , new: 'echo "menuentry \'$(echo "$os" | grub_quote)\' --unrestricted ' }
+#   notify: update grub
+#   when: boot_password.rc == 1
 
 # - name: 1.4.2 Ensure bootloader password is set (Scored)
 #   lineinfile:

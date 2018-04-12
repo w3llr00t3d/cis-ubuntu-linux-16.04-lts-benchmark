@@ -13,7 +13,7 @@ sudo apt-get update && sudo apt-get install ansible
 
 ## Download Role From GitHub
 ```
-git clone https://github.com/PaxDominicus/CIS-Ubuntu-Linux-16.04-LTS-Benchmark.git roles/cis
+git clone https://github.com/paxdominicus/cis-ubuntu-linux-16.04-lts-benchmark.git roles/cis-ubuntu-linux-16.04-lts-benchmark
 ```
 
 ## Create Playbook
@@ -22,12 +22,12 @@ cat >>  playbook.yml << 'EOF'
 ---
 - hosts: all
   roles:
-    - cis
+    - cis-ubuntu-linux-16.04-lts-benchmark
 EOF
 ```
 
 ## Configure Playbook
-sudo nano roles/cis/defaults/main.yml
+sudo nano roles/cis-ubuntu-linux-16.04-lts-benchmark/defaults/main.yml
 
 ## Run Playbook
 ```
