@@ -44,7 +44,7 @@
 - name: 4.1.4 Ensure events that modify date and time information are collected (Scored)
   lineinfile: 
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -58,7 +58,7 @@
 - name: 4.1.5 Ensure events that modify user/group information are collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes    
   with_items:
@@ -72,7 +72,7 @@
 - name: 4.1.6 Ensure events that modify the system's network environment are collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -87,7 +87,7 @@
 - name: 4.1.7 Ensure events that modify the system's Mandatory Access Controls are collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -100,7 +100,7 @@
 - name: 4.1.8 Ensure login and logout events are collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -112,7 +112,7 @@
 - name: 4.1.9 Ensure session initiation information is collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -124,7 +124,7 @@
 - name: 4.1.10 Ensure discretionary access control permission modification events are collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -139,7 +139,7 @@
 - name: 4.1.11 Ensure unsuccessful unauthorized file access attempts are collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -166,7 +166,7 @@
 - name: 4.1.13 Ensure successful file system mounts are collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -177,7 +177,7 @@
 - name: 4.1.14 Ensure file deletion events by users are collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -188,7 +188,7 @@
 - name: 4.1.15 Ensure changes to system administration scope (sudoers) is collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -207,7 +207,7 @@
 - name: 4.1.17 Ensure kernel module loading and unloading is collected (Scored)
   lineinfile:
     path: /etc/audit/audit.rules
-    line: ' {{ item }} '
+    line: '{{ item }}'
     state: present
     create: yes
   with_items:
@@ -391,7 +391,7 @@
 - name: 4.2.4 Ensure permissions on all logfiles are configured (Scored)
   file:
     path: /var/log
-    mode: g=wx,o=rwx
+    mode: g-wx,o-rwx
     recurse: yes
 
 - name: 4.3 Ensure logrotate is configured (Not Scored)
