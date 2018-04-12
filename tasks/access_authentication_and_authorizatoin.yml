@@ -320,6 +320,7 @@
   with_items:
     - '/etc/bashrc'
     - '/etc/profile'
+  ignore_errors: True
 
 - name: 5.5 Ensure root login is restricted to system console (Not Scored)
   stat:
