@@ -12,3 +12,10 @@
     mode: 0400
     owner: root
     group: root
+
+- name: Ensure permissions on /etc/shadow- are 400
+  file:
+    path: /etc/shadow-
+    mode: 0400
+    owner: root
+    group: root
