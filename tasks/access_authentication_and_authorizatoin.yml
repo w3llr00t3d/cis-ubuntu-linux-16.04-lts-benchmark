@@ -308,6 +308,12 @@
     regexp: '^umask'
     state: present
 
+- name: 5.4.4 Ensure default user umask is 027 or more restrictive (Scored)
+  lineinfile:
+    path:  ~/.profile
+    line: 'umask 027'
+    regexp: '^#umask'
+    
 - name: 5.4.5 Ensure default user shell timeout is 900 seconds or less (Scored)
   lineinfile:
     path: "{{ item }}"
