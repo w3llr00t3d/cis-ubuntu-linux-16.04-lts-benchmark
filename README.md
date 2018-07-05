@@ -27,7 +27,9 @@ EOF
 ```
 
 ## Configure Playbook
+```
 sudo nano roles/cis-ubuntu-linux-16.04-lts-benchmark/defaults/main.yml
+```
 
 ## Run Playbook
 ```
