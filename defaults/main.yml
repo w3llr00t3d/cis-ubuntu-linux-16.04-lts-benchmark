@@ -51,7 +51,7 @@ remote_logging: true
 syslog_package: rsyslog
 
 # Remote Logs Host Address - Set IP address of the remote log server. The IP address below is for example only.
-remote_logs_host_address: 192.168.1.1
+remote_logs_host_address: 192.0.2.0
 
 # Pasword Re-use - Set to the maximum number of passwords to remember to deny reuse (default = 5).
 remember_passwords: 5
@@ -68,4 +68,4 @@ access_authentication_and_authorizatoin: True
 system_maintenance: True
 
 # This is an optional set of task that furture secure the OS' configuraiton beyond CIS' benchmarks (default = false).
-extras: True # CHANGE TO ENFORCING AFTER TESTING IS COMPLETE
+extras: false
