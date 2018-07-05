@@ -330,9 +330,18 @@
     path: /etc/securetty
   register: securetty_file
 
-### Needs fixing
 - name: 5.5 Ensure root login is restricted to system console (Not Scored)
-  debug: msg='*** Check /etc/securetty for console allowed for root access ***'
+  replace:
+    path: /etc/securetty
+    regexp: '.*'
+    replace: '#\1'
+  when: securetty_file.stat.exists == True
+
+- name: 5.5 Ensure root login is restricted to system console (Not Scored)
+  replace:
+    path: /etc/securetty
+    regexp: '#console|#tty[0-99]|#vc[0-99]'
+    replace: '\1'
   when: securetty_file.stat.exists == True
 
 ### Needs review
