@@ -4,22 +4,22 @@
 
 - include: preliminary_checks.yml
 
-- include: initial_setup.yml
+- include: 1_initial_setup.yml
   when: initial_setup
 
-- include: services.yml
+- include: 2_services.yml
   when: services
 
-- include: network_configuration.yml
+- include: 3_network_configuration.yml
   when: network_configuration
 
-- include: logging_and_auditing.yml
+- include: 4_logging_and_auditing.yml
   when: logging_and_auditing
 
-- include: access_authentication_and_authorizatoin.yml
+- include: 5_access_authentication_and_authorizatoin.yml
   when: access_authentication_and_authorizatoin
 
-- include: system_maintenance.yml
+- include: 6_system_maintenance.yml
   when: system_maintenance
 
 - include: extras.yml
