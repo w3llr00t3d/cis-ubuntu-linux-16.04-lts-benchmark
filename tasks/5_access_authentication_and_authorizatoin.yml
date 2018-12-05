@@ -304,8 +304,8 @@
 - name: 5.4.4 Ensure default user umask is 027 or more restrictive (Scored)
   lineinfile:
     path: /etc/login.defs
-    line: 'umask 027'
-    regexp: '^umask'
+    line: 'UMASK 027'
+    regexp: '^UMASK'
     state: present
 
 - name: 5.4.4 Ensure default user umask is 027 or more restrictive (Scored)
