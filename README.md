@@ -13,7 +13,7 @@ sudo apt-get update && sudo apt-get install ansible
 
 ## Download Role From GitHub
 ```
-git clone https://github.com/paxdominicus/cis-ubuntu-linux-16.04-lts-benchmark.git roles/cis-ubuntu-linux-16.04-lts-benchmark
+git clone https://github.com/bigred2k/cis-ubuntu-linux-16.04-lts-benchmark.git /etc/ansible/roles/cis-ubuntu-linux-16.04-lts-benchmark
 ```
 
 ## Create Playbook
