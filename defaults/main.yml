@@ -33,7 +33,7 @@ time_sync_server: ntp.ubuntu.com
 net_ipv4_ip_forward: 0
 
 # Disable IPv6 - Set to 'true' or 'false' depending on wheter you use IPv6 (default = true).
-disabled_ipv6: true
+disabled_ipv6: false
 
 # Enable IPtables - Set to 'true' or 'false' depending on wheter you are using another host based firewall such as AWS Security Groups (default = true).
 use_iptables: false # WIP
@@ -45,7 +45,7 @@ max_log_file_auditd: 100
 max_log_file_action: keep_logs
 
 # Remote Logging - Set to 'true', or 'false' if you are using a a non-native log collector (default = true).
-remote_logging: true
+remote_logging: false
 
 # Prefered Syslog Package - Set to 'rsyslog' or 'syslog-ng' if using native logging (default = rsyslog).
 syslog_package: rsyslog
@@ -64,7 +64,7 @@ initial_setup: True
 services: True
 network_configuration: True
 logging_and_auditing: True
-access_authentication_and_authorizatoin: True
+access_authentication_and_authorization: True
 system_maintenance: True
 
 # This is an optional set of task that furture secure the OS' configuraiton beyond CIS' benchmarks (default = false).
