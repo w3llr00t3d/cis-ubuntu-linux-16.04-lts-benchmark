@@ -14,7 +14,7 @@ sudo apt-get update && sudo apt-get install ansible
 
 ## Enable Ansible Logging
 ```
-vi /etc/ansible.conf
+vi /etc/ansible/ansible.cfg
 ```
 
 ## Download Role From GitHub
