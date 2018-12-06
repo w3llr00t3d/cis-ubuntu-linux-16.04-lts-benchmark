@@ -16,6 +16,8 @@ sudo apt-get update && sudo apt-get install ansible
 ```
 vi /etc/ansible/ansible.cfg
 ```
+uncomment the following line and save: log_path = /var/log/ansible.log
+
 
 ## Download Role From GitHub
 ```
@@ -36,6 +38,8 @@ EOF
 ```
 sudo vi /etc/ansible/roles/cis-ubuntu-linux-16.04-lts-benchmark/defaults/main.yml
 ```
+(Actually review the file)
+
 
 ## Run Playbook
 ```
