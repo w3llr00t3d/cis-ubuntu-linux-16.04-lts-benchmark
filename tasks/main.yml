@@ -16,8 +16,8 @@
 - include: 4_logging_and_auditing.yml
   when: logging_and_auditing
 
-- include: 5_access_authentication_and_authorizatoin.yml
-  when: access_authentication_and_authorizatoin
+- include: 5_access_authentication_and_authorization.yml
+  when: access_authentication_and_authorization
 
 - include: 6_system_maintenance.yml
   when: system_maintenance
