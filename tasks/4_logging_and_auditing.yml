@@ -304,7 +304,7 @@
 
 - name: 4.2.1.5 Ensure remote rsyslog messages are only accepted on designated log hosts. (Not Scored)
   command: grep '^$ModLoad imtcp' /etc/rsyslog.conf
-  register: moadloadpresent
+  register: modloadpresent
   failed_when: False
   check_mode: no
 
@@ -318,7 +318,7 @@
       - '$ModLoad imtcp'
       - '$InputTCPServerRun 514'
   notify: restart rsyslog
-  when: moadloadpresent.rc == 1 and syslog_package == "rsyslog"
+  when: modloadpresent.rc == 1 and syslog_package == "rsyslog"
 
 - name: 4.2.2.1 Ensure syslog-ng service is enabled (Scored)
   command: dpkg-query -s syslog-ng

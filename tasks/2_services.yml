@@ -172,7 +172,7 @@
     regexp: '{{ item.expression }}'
     line: '{{ item.value }}'
   with_items:
-    - { name: '/etc/ntp.conf' , expression: '^server' , value: 'pool {{ time_sync_server }}' }
+    - { name: '/etc/ntp.conf' , expression: '^pool' , value: 'pool {{ time_sync_server }}' }
     - { name: '/etc/ntp.conf' , expression: '^restrict -4' , value: 'restrict -4 default kod nomodify notrap nopeer noquery' }
     - { name: '/etc/ntp.conf' , expression: '^restrict -6' , value: 'restrict -6 default kod nomodify notrap nopeer noquery' }
     - { name: '/etc/init.d/ntp', expression: '^RUNASUSER' , value: 'RUNASUSER=ntp' }
